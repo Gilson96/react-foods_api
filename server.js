@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors');
 const connectDB = require('./dbConnection')
 const foodRouter = require("./routes/routes");
+const personRouter = require("./routes/personRoutes")
 const mongoose = require("mongoose") 
 
 connectDB()
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/foods", foodRouter);
+app.use("/person", personRouter);
 
 mongoose.connection.once('open', () => {
   console.log('connected to MongoDB')

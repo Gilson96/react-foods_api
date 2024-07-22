@@ -6,12 +6,7 @@ const foodSchema = new Schema({
     image: String,
     name: String,
     price: String,
-    description: String,
-    person: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Person"
-    }]
-
+    description: String
 })
 
 

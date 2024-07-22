@@ -57,12 +57,9 @@ exports.deleteFood = async (req, res) => {
 
 // Create an Person
 exports.createPerson = async (req, res, doctorId) => {
-     const id = req.params.id;
     try {
         const createPerson = await Person.create(req.body)
-        const updatedFood = await Food.findOneAndUpdate({ id: id }, {$push: {appoitments: createPerson}}, { new: true });
-
-        res.status(200).json(createPerson, updatedFood);
+        res.status(200).json(createPerson);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -72,7 +69,7 @@ exports.createPerson = async (req, res, doctorId) => {
 exports.getPerson = async (req, res) => {
     const id = req.params.id;
     try {
-        const persons = await Food.findOne({id: id}).populate('persons', "-_id -__v" );
+        const persons = await Person.findOne({id: id});
         res.status(200).json(persons);
     } catch (error) {
         res.status(404).json({ message: error.message });

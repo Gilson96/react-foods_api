@@ -8,11 +8,6 @@ const personSchema = new Schema({
     street: String,
     postCode: String,
     city: String,
-    foods: {
-        type: Schema.Types.ObjectId,
-        ref: "Food"
-    }
-   
 },
     {strictPopulate: false}
 )
