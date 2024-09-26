@@ -1,5 +1,4 @@
 const Food = require("../model/foodData")
-const Person = require("../model/personData")
 
 // Get all Food data
 exports.getFoods = async (req, res) => {
@@ -33,7 +32,7 @@ exports.createFood = async (req, res) => {
     }
 }
 
-// Upadate a Food
+// Update a Food
 exports.updateFood = async (req, res) => {
     const id = req.params.id;
     try {
@@ -52,26 +51,5 @@ exports.deleteFood = async (req, res) => {
         res.status(200).json('deleted');
     } catch (error) {
         res.status(400).json({ message: error.message });
-    }
-}
-
-// Create an Person
-exports.createPerson = async (req, res, doctorId) => {
-    try {
-        const createPerson = await Person.create(req.body)
-        res.status(200).json(createPerson);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-}
-
-// Get person's booking
-exports.getPerson = async (req, res) => {
-    const id = req.params.id;
-    try {
-        const persons = await Person.findOne({id: id});
-        res.status(200).json(persons);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
     }
 }
