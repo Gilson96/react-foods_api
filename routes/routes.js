@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get('/', operations.getFoods);
 router.get('/:id', operations.getFood);
+router.put('/:id', operations.updateFood);
 router.post('/', operations.createFood);
 router.delete('/:id', operations.deleteFood);
 
