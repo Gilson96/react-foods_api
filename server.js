@@ -1,12 +1,12 @@
-const dotenv = require('dotenv')
-dotenv.config({path:__dirname+'/.env'});
 const express = require("express")
-const app = express();
+const dotenv = require('dotenv')
 const cors = require('cors');
 const connectDB = require('./dbConnection')
 const foodRouter = require("./routes/routes");
 const mongoose = require("mongoose") 
 
+const app = express();
+dotenv.config({path:__dirname+'/.env'});
 connectDB()
 
 const PORT = process.env.PORT || 5050;
@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5050;
 app.use(cors());
 app.use(express.json());
 
-app.use("/foods", foodRouter);
+app.use("/", foodRouter);
 
 mongoose.connection.once('open', () => {
   console.log('connected to MongoDB')

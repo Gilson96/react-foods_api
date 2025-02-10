@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const foodSchema = new Schema({
+const ratingsAndreviewsSchema = new Schema({
     name: {
         type: String,
         required: true
     },
-    price: {
+    rating: {
         type: String,
         required: true
     },
@@ -14,8 +14,9 @@ const foodSchema = new Schema({
         type: String,
         required: true
     },
-    poster_image: {
+    date: {
         type: String,
+        required: true
     },
     restaurant: {
         type: mongoose.Types.ObjectId,
@@ -25,5 +26,5 @@ const foodSchema = new Schema({
 })
 
 
-const Food = mongoose.model('Food', foodSchema);
-module.exports = Food
+const ratingsAndreviews = mongoose.model('Rating&Review', ratingsAndreviewsSchema);
+module.exports = ratingsAndreviews
