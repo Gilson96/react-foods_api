@@ -17,6 +17,9 @@ const foodSchema = new Schema({
     poster_image: {
         type: String,
     },
+    quantity: {
+        type: number
+    }
     restaurant: {
         type: mongoose.Types.ObjectId,
         required: true,
