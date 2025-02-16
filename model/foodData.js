@@ -18,7 +18,7 @@ const foodSchema = new Schema({
         type: String,
     },
     quantity: {
-        type: number
+        type: Number,
     },
     restaurant: {
         type: mongoose.Types.ObjectId,
