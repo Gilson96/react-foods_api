@@ -22,13 +22,13 @@ const userSchema = new Schema({
         type: String,
     },
     address: {
-        type: String
+        type: String,
+        required: true
     },
     favouritesRestaurants: [
         {
             restaurantId: {
                 type: Schema.Types.ObjectId,
-                required: true,
                 ref: 'Restaurant'
             },
         }
@@ -37,7 +37,6 @@ const userSchema = new Schema({
         {
             restaurantId: {
                 type: Schema.Types.ObjectId,
-                required: true,
                 ref: 'Restaurant'
             },
             date: {
