@@ -20,7 +20,9 @@ const userSchema = new Schema({
     },
     image: {
         type: String,
-        required: true
+    },
+    address: {
+        type: String
     },
     favouritesRestaurants: [
         {
@@ -29,6 +31,17 @@ const userSchema = new Schema({
                 required: true,
                 ref: 'Restaurant'
             },
+        }
+    ],
+    Orders: [
+        {
+            restaurantId: {
+                type: Schema.Types.ObjectId,
+                required: true,
+                ref: 'Restaurant'
+            },
+            timestamps: true,
+            totalCost: { type: String }
         }
     ],
 })
