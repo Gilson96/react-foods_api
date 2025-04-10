@@ -40,8 +40,12 @@ const userSchema = new Schema({
                 required: true,
                 ref: 'Restaurant'
             },
-            timestamps: true,
-            totalCost: { type: String }
+            date: {
+                type: Date
+            },
+            totalCost: {
+                type: String
+            }
         }
     ],
 })
