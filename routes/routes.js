@@ -5,15 +5,9 @@ const recommendedFoodOperations = require("../controllers/RecommendedFoodControl
 const restaurantOperations = require("../controllers/RestaurantController");
 const userOperations = require("../controllers/userController");
 const categoryOperations = require("../controllers/categoryController");
-
+const checkAuth = require('../middleware/check-auth')
 const router = express.Router();
-
-// user routes
-router.get('/user', userOperations.getUsers);
-router.get('/user/:id', userOperations.getUser);
-router.post('/user', userOperations.createUser);
-router.put('/user/:id', userOperations.updateUser);
-router.delete('/user', userOperations.deleteUser);
+const { check } = require('express-validator')
 
 // category routes
 router.post('/category', categoryOperations.createCategory);
@@ -49,6 +43,29 @@ router.get('/:restaurantId/recommededFoods', recommendedFoodOperations.getRecomm
 router.get('/:restaurantId/recommededFoods/:recommededFoodId', recommendedFoodOperations.getRecommendedFood);
 router.put('/:restaurantId/recommendedFoods/recommededFoodId', recommendedFoodOperations.updateRecommendedFood);
 router.delete('/:restaurantId/recommendedFoods/recommededFoodId', recommendedFoodOperations.deleteRecommendedFood);
+
+// user routes
+router.get('/user', userOperations.getUsers);
+router.post('/login', userOperations.login)
+// check inputs validation
+// with the help of 'express-validator'
+router.post('/signup', [
+    check('name')
+        .not()
+        .isEmpty(),
+    check('email')
+        .normalizeEmail()
+        .isEmail(),
+    check('password')
+        .isLength({ min: 6 })
+], userOperations.signup)
+
+// Middleware to check if there's a login
+// If there's, enable the following request
+router.use(checkAuth);
+
+router.post('/:userId/favourite', userOperations.AddFavouriteRestaurants)
+router.post('/:userId', userOperations.AddOrders)
 
 
 module.exports = router;
