@@ -44,10 +44,6 @@ router.get('/:restaurantId/recommededFoods/:recommededFoodId', recommendedFoodOp
 router.put('/:restaurantId/recommendedFoods/recommededFoodId', recommendedFoodOperations.updateRecommendedFood);
 router.delete('/:restaurantId/recommendedFoods/recommededFoodId', recommendedFoodOperations.deleteRecommendedFood);
 
-// user routes
-router.post('/login', userOperations.login)
-// check inputs validation
-// with the help of 'express-validator'
 router.post('/signup', [
     check('name')
     .not()
@@ -59,14 +55,9 @@ router.post('/signup', [
     .isLength({ min: 6 })
 ], userOperations.signup)
 
-
-// Middleware to check if there's a login
-// If there's, enable the following request
-router.use(checkAuth);
-
-router.get('/user', userOperations.getUsers);
-router.post('/:userId/favourite', userOperations.AddFavouriteRestaurants)
-router.post('/:userId/orders', userOperations.AddOrders)
-
+router.post('/login', userOperations.login)
+router.use(checkAuth)
+router.get('/user', userOperations.getUsers)
+// router.delete('/user/delete', userOperations.UserDelete)
 
 module.exports = router;
