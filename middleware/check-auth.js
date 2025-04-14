@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken')
 
-module.exports = (req, res, next) => {
+module.exports =  (req, res, next) => {
     // Authorization needs to be 'Bearer TOKEN'
     // using split('') to separate 'Bearer' and 'Token'
     // And using [1] to access the Token value
     try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.headers.authorization.split(" ")[1];
         // if token is undefined throw an error
         if (!token) {
             throw new Error('Authentication failed')
