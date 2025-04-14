@@ -72,7 +72,8 @@ const signup = async (req, res, next) => {
     // toObject convert mongoDB object
     // into a POJO 
     // getters removes '_' from '_id'
-    res.status(201).json({ userId: createdUser.id, email: createdUser.email, token: token });
+    res.status(201).send({ userId: createdUser.id, email: createdUser.email, token: token });
+
 }
 
 const login = async (req, res, next) => {
@@ -121,6 +122,7 @@ const login = async (req, res, next) => {
         email: existingUser.email,
         token: token
     })
+
 }
 
 exports.AddFavouriteRestaurants = async (req, res) => {
