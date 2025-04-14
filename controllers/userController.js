@@ -143,6 +143,27 @@ exports.AddOrders = async (req, res) => {
     }
 }
 
+exports.UserDelete = async (req, res) => {
+    try {
+        const updatedOrders = await User.findOneAndDelete({ _id: "67fa53d63de8632d14006bb1" })
+        res.status(200).json(updatedOrders);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+// exports.deleteRestaurant = async (req, res) => {
+//     const restaurantId = req.params.restaurantId;
+//     const categoryId = req.params.categoryId
+//     try {
+//         const restaurantToDelete = await Restaurant.findOneAndDelete({ _id: "67a88809ffebbc48d0fd3236" });
+
+//         res.status(200).json('deleted');
+//     } catch (error) {
+//         res.status(400).json({ message: error.message });
+//     }
+// }
+
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;

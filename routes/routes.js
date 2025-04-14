@@ -45,27 +45,28 @@ router.put('/:restaurantId/recommendedFoods/recommededFoodId', recommendedFoodOp
 router.delete('/:restaurantId/recommendedFoods/recommededFoodId', recommendedFoodOperations.deleteRecommendedFood);
 
 // user routes
-router.get('/user', userOperations.getUsers);
 router.post('/login', userOperations.login)
 // check inputs validation
 // with the help of 'express-validator'
 router.post('/signup', [
     check('name')
-        .not()
-        .isEmpty(),
+    .not()
+    .isEmpty(),
     check('email')
-        .normalizeEmail()
-        .isEmail(),
+    .normalizeEmail()
+    .isEmail(),
     check('password')
-        .isLength({ min: 6 })
+    .isLength({ min: 6 })
 ], userOperations.signup)
+
 
 // Middleware to check if there's a login
 // If there's, enable the following request
 router.use(checkAuth);
 
+router.get('/user', userOperations.getUsers);
 router.post('/:userId/favourite', userOperations.AddFavouriteRestaurants)
-router.post('/:userId', userOperations.AddOrders)
+router.post('/:userId/orders', userOperations.AddOrders)
 
 
 module.exports = router;
