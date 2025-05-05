@@ -58,8 +58,8 @@ router.post('/signup', [
 router.post('/login', userOperations.login)
 router.use(checkAuth)
 router.get('/user', userOperations.getUsers)
-router.post(':userId', userOperations.AddFavouriteRestaurants)
-router.post(':userId', userOperations.AddOrders)
+router.post(':userId/favourites', userOperations.AddFavouriteRestaurants)
+router.post(':userId/orders', userOperations.AddOrders)
 router.delete('/user/delete', userOperations.UserDelete)
 
 module.exports = router;
