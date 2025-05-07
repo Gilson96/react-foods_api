@@ -1,7 +1,7 @@
 const dotenv = require('dotenv')
 dotenv.config({ path: __dirname + '/.env' });
 
-const stripe = require('stripe')('sk_test_51RM9WqQc9p8NGwhTVWaT5PLExXNFPJBerqfEWc6TrtKhhQK7WBNtG0iSSs4MlRZWAGqTsimEecW1AF3cn39RGIMm00YDaNWQfJ');
+const stripe = require('stripe')(`${process.env.Stripe_SECRET_KEY}`);
 
 exports.create_payment_intent = async (req, res) => {
     const { total } = req.body
@@ -17,6 +17,4 @@ exports.create_payment_intent = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: 'Stripe connection error' });
     }
-
-
 }
