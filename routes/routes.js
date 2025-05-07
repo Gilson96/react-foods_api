@@ -1,10 +1,10 @@
 const express = require("express");
 const foodOperations = require("../controllers/foodController");
 const ratingAndReviewsOperations = require("../controllers/ratingReviewsController");
-const recommendedFoodOperations = require("../controllers/RecommendedFoodController");
 const restaurantOperations = require("../controllers/RestaurantController");
 const userOperations = require("../controllers/userController");
 const categoryOperations = require("../controllers/categoryController");
+const paymentOperations = require("../controllers/paymentController");
 const checkAuth = require('../middleware/check-auth')
 const router = express.Router();
 const { check } = require('express-validator')
@@ -37,12 +37,9 @@ router.get('/:restaurantId/reviews/:reviewsId', ratingAndReviewsOperations.getRa
 router.put('/:restaurantId/reviews/:reviewsId', ratingAndReviewsOperations.updateRatingAndReview);
 router.delete('/:restaurantId/reviews/:reviewsId', ratingAndReviewsOperations.deleteRatingAndReview);
 
-// recommended routes
-router.post('/:restaurantId/recommededFoods', recommendedFoodOperations.createRecommendedFood);
-router.get('/:restaurantId/recommededFoods', recommendedFoodOperations.getRecommendedFoods);
-router.get('/:restaurantId/recommededFoods/:recommededFoodId', recommendedFoodOperations.getRecommendedFood);
-router.put('/:restaurantId/recommendedFoods/recommededFoodId', recommendedFoodOperations.updateRecommendedFood);
-router.delete('/:restaurantId/recommendedFoods/recommededFoodId', recommendedFoodOperations.deleteRecommendedFood);
+// payement
+router.post('/payment-intent', paymentOperations.create_payment_intent);
+
 
 router.post('/signup', [
     check('name')
@@ -56,10 +53,11 @@ router.post('/signup', [
 ], userOperations.signup)
 
 router.post('/login', userOperations.login)
-// router.use(checkAuth)
+router.use(checkAuth)
+
 router.get('/user', userOperations.getUsers)
 router.post('/:userId/favourites', userOperations.AddFavouriteRestaurants)
 router.post('/:userId/orders', userOperations.AddOrders)
-router.delete('/user/delete', userOperations.UserDelete)
+// router.delete('/user/delete', userOperations.UserDelete)
 
 module.exports = router;
