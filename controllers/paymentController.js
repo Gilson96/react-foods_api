@@ -15,7 +15,7 @@ exports.create_payment_intent = async (req, res) => {
             clientSecret: paymentIntent.client_secret
         })
     } catch (err) {
-        res.status(500).json({ message: 'Stripe connection error' + err });
+        res.status(500).json({ message: err });
     }
 
   
