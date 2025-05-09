@@ -17,6 +17,15 @@ exports.create_payment_intent = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err });
     }
+}
 
-  
+exports.CreateCheckoutSession = async (req, res) => {
+    const { totalPrice } = req.body
+
+    const session = await stripe.checkout.sessions.create({
+        amount: totalPrice,
+        currency: 'gbp',
+    });
+
+    res.json({ checkoutSessionClientSecret: session.client_secret });
 }
