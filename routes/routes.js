@@ -38,7 +38,7 @@ router.put('/:restaurantId/reviews/:reviewsId', ratingAndReviewsOperations.updat
 router.delete('/:restaurantId/reviews/:reviewsId', ratingAndReviewsOperations.deleteRatingAndReview);
 
 // payement
-router.post('/payement-intent', paymentOperations.create_payment_intent);
+router.post('/payment-intent', paymentOperations.create_payment_intent);
 
 
 router.post('/signup', [
