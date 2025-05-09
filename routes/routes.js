@@ -38,7 +38,7 @@ router.put('/:restaurantId/reviews/:reviewsId', ratingAndReviewsOperations.updat
 router.delete('/:restaurantId/reviews/:reviewsId', ratingAndReviewsOperations.deleteRatingAndReview);
 
 // payement
-router.post('/create-checkout-session', paymentOperations.create_payment_intent);
+router.post('/create-checkout-session', paymentOperations.CreateCheckoutSession);
 
 
 router.post('/signup', [
