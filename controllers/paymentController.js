@@ -10,6 +10,7 @@ exports.create_payment_intent = async (req, res) => {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: totalPrice,
             currency: 'gbp',
+            payment_method_types: ['card']
         });
         res.status(200).json({
             clientSecret: paymentIntent.client_secret
