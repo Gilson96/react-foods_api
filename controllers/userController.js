@@ -125,6 +125,13 @@ const login = async (req, res, next) => {
 
 }
 
+const logout = (req, res) => {
+    const cookies = req.cookies
+    if (!cookies?.jwt) return res.sendStatus(204) //No content
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
+    res.json({ message: 'Cookie cleared' })
+}
+
 exports.AddFavouriteRestaurants = async (req, res) => {
     const userId = req.params.userId
     try {
@@ -158,3 +165,4 @@ exports.UserDelete = async (req, res) => {
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
+exports.logout = logout;

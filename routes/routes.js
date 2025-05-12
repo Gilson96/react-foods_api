@@ -53,6 +53,7 @@ router.post('/signup', [
 ], userOperations.signup)
 
 router.post('/login', userOperations.login)
+router.post('/logout', userOperations.logout)
 router.use(checkAuth)
 
 router.get('/user', userOperations.getUsers)
