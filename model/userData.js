@@ -34,18 +34,12 @@ const userSchema = new Schema({
             },
         }
     ],
-    Orders: [
+    orders: [
         {
             restaurantId: {
                 type: Schema.Types.ObjectId,
                 ref: 'Restaurant'
             },
-            date: {
-                type: Date
-            },
-            totalCost: {
-                type: String
-            }
         }
     ],
 })
