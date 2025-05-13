@@ -54,11 +54,11 @@ router.post('/signup', [
 
 router.post('/login', userOperations.login)
 router.post('/logout', userOperations.logout)
-router.use(checkAuth)
+router.delete('/user/delete', userOperations.UserDelete)
+// router.use(checkAuth)
 
 router.get('/user', userOperations.getUsers)
 router.post('/:userId/favourites', userOperations.AddFavouriteRestaurants)
 router.post('/:userId/orders', userOperations.AddOrders)
-// router.delete('/user/delete', userOperations.UserDelete)
 
 module.exports = router;

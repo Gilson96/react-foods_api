@@ -154,7 +154,7 @@ exports.AddOrders = async (req, res) => {
 
 exports.UserDelete = async (req, res) => {
     try {
-        const updatedOrders = await User.findOneAndDelete({ _id: "67fd845abb6babac5aff1c8c" })
+        const updatedOrders = await User.findOneAndDelete({ _id: "67fd9a1272e21ee51761c003" })
         res.status(200).json(updatedOrders);
     } catch (error) {
         res.status(400).json({ message: error.message });
