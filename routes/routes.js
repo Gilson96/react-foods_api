@@ -54,7 +54,7 @@ router.post('/signup', [
 
 router.post('/login', userOperations.login)
 router.post('/logout', userOperations.logout)
-router.use(checkAuth)
+// router.use(checkAuth)
 
 router.get('/user', userOperations.getUsers)
 router.post('/:userId/favourites', userOperations.AddFavouriteRestaurants)
