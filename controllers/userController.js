@@ -16,127 +16,32 @@ const getUsers = async (req, res, next) => {
     res.json({ users: users.map(user => user.toObject({ getters: true })) })
 }
 
-const signup = async (req, res, next) => {
-    // inputs validation
-    // with 'express-validator'
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return next(res.status(422).json({ message: 'invalid credentials,please try again later' }));
-    }
-
-    const { name, email, password, address } = req.body
-
-    let existingUser
+exports.UserDelete = async (req, res) => {
     try {
-        existingUser = await User.findOne({ email: email })
+        const updatedOrders = await User.findOneAndDelete({ _id: "67fd9a1272e21ee51761c003" })
+        res.status(200).json(updatedOrders);
     } catch (error) {
-        res.status(500).json({ message: 'invalid credentials,please try again later' });
-        return next(error);
+        res.status(400).json({ message: error.message });
     }
-
-    if (existingUser) {
-        const error = res.status(422).json({ message: 'invalid credentials,please try again later' });
-        return next(error)
-    }
-
-    let hashedPassword
-    try {
-        hashedPassword = await bcrypt.hash(password, 12)
-    } catch (err) {
-        const error = res.status(500).json({ message: 'Could not create user ,please try again later' });
-        return next(error)
-    }
-
-    const createdUser = new User({
-        name,
-        email,
-        address,
-        password: hashedPassword
-    })
-
-    try {
-        await createdUser.save()
-    } catch (err) {
-        const error = res.status(500).json({ message: 'Signing up failed ,please try again later' });
-        return next(error)
-    }
-
-    let token;
-    try {
-        token = jwt.sign({ userId: createdUser.id, email: createdUser.email }, 'secret', { expiresIn: '1h' })
-    } catch (err) {
-        const error = res.status(500).json({ message: 'Signing up failed ,please try again later' });
-        return next(error)
-    }
-
-    // toObject convert mongoDB object
-    // into a POJO 
-    // getters removes '_' from '_id'
-    res.status(201).send({ userId: createdUser.id, email: createdUser.email, token: token });
-
 }
 
-const login = async (req, res, next) => {
-    const { email, password } = req.body
-
-    let existingUser;
-
-    try {
-        existingUser = await User.findOne({ email: email })
-    } catch (err) {
-        const error = res.status(500).json({ message: 'Logging in failed,please try again later' });
-        return next(error);
-    }
-
-    // if existing user is not stored in the database
-    // or if the existing user password
-    // is not equal to the password entered
-    if (!existingUser) {
-        const error = res.status(401).json({ message: 'Invalid credentials,please try again later' });
-        return next(error)
-    }
-
-    let isValidPassword = false
-    try {
-        isValidPassword = await bcrypt.compare(password, existingUser.password)
-    } catch (err) {
-        const error = res.status(500).json({ message: 'Could not log youn in, please try again later' });
-        return next(error)
-    }
-
-    if (!isValidPassword) {
-        const error = res.status(401).json({ message: 'Invalid credentials, please try again later' });
-        return next(error)
-    }
-
-    let token;
-    try {
-        token = jwt.sign({ userId: existingUser.id, email: existingUser.email }, 'secret', { expiresIn: '1h' })
-    } catch (err) {
-        const error = res.status(500).json({ message: 'Logging in failed ,please try again later' });
-        return next(error)
-    }
-
-    res.json({
-        userId: existingUser.id,
-        email: existingUser.email,
-        token: token
-    })
-
-}
-
-const logout = (req, res) => {
-    const cookies = req.cookies
-    if (!cookies?.jwt) return res.sendStatus(204) //No content
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
-    res.json({ message: 'Cookie cleared' })
-}
 
 exports.AddFavouriteRestaurants = async (req, res) => {
     const userId = req.params.userId
     try {
         const updatedFavourite = await User.findOneAndUpdate({ _id: userId }, { $push: { favouritesRestaurants: req.body } }, { new: true })
         res.status(200).json(updatedFavourite);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+exports.RemoveFavouriteRestaurants = async (req, res) => {
+    const userId = req.params.userId
+    const restaurantId = req.params.restaurantId
+    try {
+        const removeRestaurant = await User.findByIdAndUpdate({ _id: userId }, { $pull: { favouritesRestaurants: { _id: restaurantId } } }, { new: true })
+        res.status(200).json(removeRestaurant);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -152,17 +57,7 @@ exports.AddOrders = async (req, res) => {
     }
 }
 
-exports.UserDelete = async (req, res) => {
-    try {
-        const updatedOrders = await User.findOneAndDelete({ _id: "67fd9a1272e21ee51761c003" })
-        res.status(200).json(updatedOrders);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-}
+
 
 
 exports.getUsers = getUsers;
-exports.signup = signup;
-exports.login = login;
-exports.logout = logout;

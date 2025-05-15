@@ -2,6 +2,7 @@ const express = require("express");
 const foodOperations = require("../controllers/foodController");
 const ratingAndReviewsOperations = require("../controllers/ratingReviewsController");
 const restaurantOperations = require("../controllers/RestaurantController");
+const authOperations = require("../controllers/authController");
 const userOperations = require("../controllers/userController");
 const categoryOperations = require("../controllers/categoryController");
 const paymentOperations = require("../controllers/paymentController");
@@ -43,21 +44,22 @@ router.post('/payment-intent', paymentOperations.create_payment_intent);
 
 router.post('/signup', [
     check('name')
-    .not()
-    .isEmpty(),
+        .not()
+        .isEmpty(),
     check('email')
-    .normalizeEmail()
-    .isEmail(),
+        .normalizeEmail()
+        .isEmail(),
     check('password')
-    .isLength({ min: 6 })
-], userOperations.signup)
+        .isLength({ min: 6 })
+], authOperations.signup)
 
-router.post('/login', userOperations.login)
-router.post('/logout', userOperations.logout)
+router.post('/login', authOperations.login)
+router.post('/logout', authOperations.logout)
 // router.use(checkAuth)
 
 router.get('/user', userOperations.getUsers)
-router.post('/:userId/favourites', userOperations.AddFavouriteRestaurants)
+router.post('/:userId/favourites/', userOperations.AddFavouriteRestaurants)
+router.post('/:userId/favourites/:restaurantId', userOperations.RemoveFavouriteRestaurants)
 router.post('/:userId/orders', userOperations.AddOrders)
 // router.delete('/user/delete', userOperations.UserDelete)
 
