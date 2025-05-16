@@ -57,6 +57,16 @@ exports.AddOrders = async (req, res) => {
     }
 }
 
+exports.RemoveOrdersRestaurants = async (req, res) => {
+    const userId = req.params.userId
+    const foodId = req.params.foodId
+    try {
+        const removeRestaurant = await User.findByIdAndUpdate({ _id: userId }, { $pull: { orders: { _id: foodId } } }, { new: true })
+        res.status(200).json(removeRestaurant);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
 
 
 

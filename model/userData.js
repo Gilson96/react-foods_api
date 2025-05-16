@@ -39,6 +39,10 @@ const userSchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'Restaurant'
             },
+            totalPrice: {
+                type: Number
+            },
+            timeStamp: { type: String }
         }
     ],
 })

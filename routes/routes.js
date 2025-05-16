@@ -61,6 +61,7 @@ router.get('/user', userOperations.getUsers)
 router.post('/:userId/favourites/', userOperations.AddFavouriteRestaurants)
 router.post('/:userId/favourites/:restaurantId', userOperations.RemoveFavouriteRestaurants)
 router.post('/:userId/orders', userOperations.AddOrders)
+router.post('/:userId/orders/:foodId', userOperations.RemoveOrdersRestaurants)
 // router.delete('/user/delete', userOperations.UserDelete)
 
 module.exports = router;
