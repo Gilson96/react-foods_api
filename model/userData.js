@@ -37,12 +37,19 @@ const userSchema = new Schema({
         {
             restaurantId: {
                 type: Schema.Types.ObjectId,
-                ref: 'Restaurant'
+                ref: 'Restaurant',
+                required: true,
             },
+            foods: [{
+                type: mongoose.Types.ObjectId,
+                required: true,
+                ref: 'Food'
+            }],
             totalPrice: {
-                type: Number
+                type: Number,
+                required: true,
             },
-            timeStamp: { type: Number }
+            timeStamp: { type: Number, required: true, }
         }
     ],
 })
