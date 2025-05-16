@@ -42,7 +42,7 @@ const userSchema = new Schema({
             totalPrice: {
                 type: Number
             },
-            timeStamp: { type: String }
+            timeStamp: { type: Number }
         }
     ],
 })
