@@ -40,12 +40,16 @@ const userSchema = new Schema({
                 ref: 'Restaurant',
                 required: true,
             },
-            foods: [{
-                type: mongoose.Types.ObjectId,
-                required: true,
-                ref: 'Food',
-                quantity: {type: Number}
-            }],
+            foods: [
+                {
+                    foodId: {
+                        type: mongoose.Types.ObjectId,
+                        required: true,
+                        ref: 'Food'
+                    },
+                    quantity: { type: Number }
+                },
+            ],
             totalPrice: {
                 type: Number,
                 required: true,
