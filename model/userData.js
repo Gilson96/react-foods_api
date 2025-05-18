@@ -47,7 +47,24 @@ const userSchema = new Schema({
                         required: true,
                         ref: 'Food'
                     },
-                    quantity: { type: Number }
+                    name: {
+                        type: String,
+                        required: true
+                    },
+                    price: {
+                        type: String,
+                        required: true
+                    },
+                    description: {
+                        type: String,
+                        required: true
+                    },
+                    poster_image: {
+                        type: String,
+                    },
+                    quantity: {
+                        type: Number,
+                    },
                 },
             ],
             totalPrice: {
