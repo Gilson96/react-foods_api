@@ -1,4 +1,4 @@
-import RatingAndReview from "../model/ratings&reviewsData";
+import RatingAndReview from "../model/ratingsReviewsData";
 import Restaurant from "../model/restaurantData";
 import { Request, Response } from "express";
 
