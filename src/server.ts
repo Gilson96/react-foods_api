@@ -1,0 +1,40 @@
+import express, { Application } from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./dbConnection";
+import foodRouter from "./routes/routes";
+import mongoose from "mongoose";
+import path from "path";
+
+dotenv.config({ path: path.join(__dirname, "..", ".env") });
+
+connectDB();
+
+const app: Application = express();
+
+// Global Middleware
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.use(express.json());
+
+// Routes
+app.use("/", foodRouter);
+
+const PORT = process.env.PORT || 5050;
+
+mongoose.connection.once("open", () => {
+  console.log("connected to MongoDB");
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
+});
+
+mongoose.connection.on("error", (err) => {
+  console.log(err);
+});
+
