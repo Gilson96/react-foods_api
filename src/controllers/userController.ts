@@ -17,9 +17,10 @@ exports.getUsers = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 exports.UserDelete = async (req: Request, res: Response) => {
+  const userId = req.params.userId
   try {
     const updatedOrders = await User.findOneAndDelete({
-      _id: "67fd9a1272e21ee51761c003",
+      _id: userId,
     });
     res.status(200).json(updatedOrders);
   } catch (error) {

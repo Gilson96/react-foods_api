@@ -87,7 +87,7 @@ router.post(
   userOperations.VerifyAdminRole,
   restaurantOperations.createRestaurant
 );
-// router.delete('/user/delete', userOperations.UserDelete)
+router.delete('/:userId/delete', userOperations.UserDelete)
 
 export default router;
 

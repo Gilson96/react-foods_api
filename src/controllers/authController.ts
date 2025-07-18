@@ -16,7 +16,7 @@ exports.signup = async (req: Request, res: Response, next: NextFunction) => {
     );
   }
 
-  const { name, email, password, address } = req.body;
+  const { name, email, password, address, role } = req.body;
 
   let existingUser;
   try {
@@ -49,6 +49,7 @@ exports.signup = async (req: Request, res: Response, next: NextFunction) => {
     name,
     email,
     address,
+    role,
     password: hashedPassword,
   });
 
