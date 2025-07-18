@@ -12,10 +12,14 @@ connectDB();
 
 const app: Application = express();
 
-// Global Middleware
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? ["https://your-production-frontend.com"]
+    : ["http://localhost:5173"];
+
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
