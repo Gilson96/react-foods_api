@@ -76,7 +76,7 @@ exports.deleteRestaurant = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
   try {
     const restaurantToDelete = await Restaurant.findOneAndDelete({
-      _id: "67a88809ffebbc48d0fd3236",
+      _id: restaurantId,
     });
 
     await Category.findOneAndUpdate(

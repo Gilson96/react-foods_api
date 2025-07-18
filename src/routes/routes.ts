@@ -19,7 +19,7 @@ router.delete("/category/:categoryId", categoryOperations.deleteCategory);
 
 // restaurant routes
 router.post("/restaurant/:categoryId", restaurantOperations.createRestaurant);
-router.get("/restaurant", restaurantOperations.getRestaurants);
+router.get("/restaurants", restaurantOperations.getRestaurants);
 router.get("/restaurant/:restaurantId", restaurantOperations.getRestaurant);
 router.put("/restaurant/:restaurantId", restaurantOperations.updateRestaurant);
 router.delete(
@@ -90,3 +90,4 @@ router.post(
 // router.delete('/user/delete', userOperations.UserDelete)
 
 export default router;
+

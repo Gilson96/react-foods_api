@@ -11,7 +11,7 @@ exports.signup = async (req: Request, res: Response, next: NextFunction) => {
   if (!errors.isEmpty()) {
     return next(
       res
-        .status(422)
+        .status(400)
         .json({ message: "invalid credentials,please try again later" })
     );
   }
