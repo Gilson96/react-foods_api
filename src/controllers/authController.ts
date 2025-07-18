@@ -141,6 +141,7 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
   res.json({
     userId: existingUser.id,
     email: existingUser.email,
+    role: existingUser.role,
     token: token,
   });
 };
