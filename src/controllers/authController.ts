@@ -143,6 +143,7 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
     userId: existingUser.id,
     email: existingUser.email,
     role: existingUser.role,
+    address: existingUser.address,
     token: token,
   });
 };
