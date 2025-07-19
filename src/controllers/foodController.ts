@@ -28,10 +28,7 @@ exports.createFood = async (req: Request, res: Response) => {
 exports.getFoods = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
-    const foods = await Restaurant.findOne({ _id: restaurantId }).populate(
-      "foods",
-      "-__v"
-    );
+    const foods = await Food.find()
 
     res.status(200).json(foods);
   } catch (error) {
