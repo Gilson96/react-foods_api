@@ -12,7 +12,7 @@ const { check } = require("express-validator");
 
 // category routes
 router.post("/category", categoryOperations.createCategory);
-router.get("/category", categoryOperations.getCategories);
+router.get("/categories", categoryOperations.getCategories);
 router.get("/category/:categoryId", categoryOperations.getCategory);
 router.put("/category/:categoryId", categoryOperations.updateCategory);
 router.delete("/category/:categoryId", categoryOperations.deleteCategory);
@@ -29,7 +29,7 @@ router.delete(
 
 // food routes
 router.post("/:restaurantId/food", foodOperations.createFood);
-router.get("/:restaurantId/food", foodOperations.getFoods);
+router.get("/foods", foodOperations.getFoods);
 router.get("/:restaurantId/food/:foodId", foodOperations.getFood);
 router.put("/:restaurantId/food/:foodId", foodOperations.updateFood);
 router.delete("/:restaurantId/food/:foodId", foodOperations.deleteFood);
