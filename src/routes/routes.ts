@@ -75,6 +75,7 @@ router.post("/logout", authOperations.logout);
 //router.use(checkAuth);
 
 router.get("/user", userOperations.getUsers);
+router.get("/user/:userId", userOperations.editUser);
 router.post("/:userId/favourites/", userOperations.AddFavouriteRestaurants);
 router.post(
   "/:userId/favourites/:restaurantId",
@@ -87,7 +88,6 @@ router.post(
   userOperations.VerifyAdminRole,
   restaurantOperations.createRestaurant
 );
-router.delete('/:userId/delete', userOperations.UserDelete)
+router.delete("/:userId/delete", userOperations.UserDelete);
 
 export default router;
-

@@ -16,6 +16,25 @@ exports.getUsers = async (req: Request, res: Response, next: NextFunction) => {
   res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
+exports.editUser = async (req: Request, res: Response) => {
+  const userId = req.params.userId;
+  try {
+    const updatedRestaurant = await User.findOneAndUpdate(
+      { _id: userId },
+      req.body,
+      { new: true }
+    );
+    res.status(200).json(updatedRestaurant);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json({ message: error.message });
+    } else {
+      res.status(404).json({ message: "Unknown error occurred" });
+    }
+  }
+};
+
+
 exports.UserDelete = async (req: Request, res: Response) => {
   const userId = req.params.userId
   try {
