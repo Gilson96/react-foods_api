@@ -1,21 +1,18 @@
 import User from "../model/userData";
 import { Request, Response, NextFunction } from "express";
 
-exports.getUsers = async (req: Request, res: Response, next: NextFunction) => {
-  let users;
+exports.getUsers = async (req: Request, res: Response) => {
   try {
-    // find and returns users
-    // excluding the password
-    users = await User.find();
-  } catch (err) {
-    const error = res
-      .status(500)
-      .json({ message: "Fetching users failed ,please try again later" });
-    return next(error);
+    const user = await User.find();
+    res.status(200).json(user);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json({ message: error.message });
+    } else {
+      res.status(404).json({ message: "Unknown error occurred" });
+    }
   }
-  res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
-
 exports.editUser = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   try {
@@ -34,9 +31,8 @@ exports.editUser = async (req: Request, res: Response) => {
   }
 };
 
-
 exports.UserDelete = async (req: Request, res: Response) => {
-  const userId = req.params.userId
+  const userId = req.params.userId;
   try {
     const updatedOrders = await User.findOneAndDelete({
       _id: userId,
