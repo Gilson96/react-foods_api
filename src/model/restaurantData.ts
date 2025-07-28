@@ -28,14 +28,12 @@ const restaurantSchema = new Schema({
   foods: [
     {
       type: mongoose.Types.ObjectId,
-      required: true,
       ref: "Food",
     },
   ],
   ratings_and_reviews: [
     {
       type: mongoose.Types.ObjectId,
-      required: true,
       ref: "Rating&Review",
     },
   ],
