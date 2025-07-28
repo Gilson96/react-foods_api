@@ -28,6 +28,7 @@ const restaurantSchema = new Schema({
   foods: [
     {
       type: mongoose.Types.ObjectId,
+      required: true,
       ref: "Food",
     },
   ],
