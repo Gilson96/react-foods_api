@@ -57,7 +57,11 @@ router.delete(
 );
 
 // Food routes
-router.post("/:restaurantId/food", upload.single("poster_image"), foodOperations.createFood);
+router.post(
+  "/:restaurantId/food",
+  upload.single("poster_image"),
+  foodOperations.createFood
+);
 router.get("/foods", foodOperations.getFoods);
 router.get("/:restaurantId/food/:foodId", foodOperations.getFood);
 router.put("/:restaurantId/food/:foodId", foodOperations.updateFood);
@@ -111,12 +115,7 @@ router.post(
 );
 router.post("/:userId/orders", userOperations.AddOrders);
 router.post("/:userId/orders/:foodId", userOperations.RemoveOrdersRestaurants);
-router.post(
-  "/:userId",
-  userOperations.VerifyAdminRole,
-  restaurantOperations.createRestaurant
-);
+router.post("/:userId", restaurantOperations.createRestaurant);
 router.delete("/:userId/delete", userOperations.UserDelete);
 
-// ✅ Export the router
 export default router;

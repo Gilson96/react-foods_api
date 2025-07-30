@@ -121,29 +121,12 @@ const RemoveOrdersRestaurants = async (req: Request, res: Response) => {
   }
 };
 
-const VerifyAdminRole = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const user = await User.findById(req.params.userId);
-    if (!user || user.role !== "admin") {
-      return res.status(403).json({ message: "Access denied. Admins only." });
-    }
-    next();
-  } catch (error) {
-    res.status(500).json({ message: "Authorization check failed." });
-  }
-};
-
 export default {
   AddFavouriteRestaurants,
   AddOrders,
   RemoveFavouriteRestaurants,
   RemoveOrdersRestaurants,
   editUser,
-  VerifyAdminRole,
   getUsers,
   UserDelete,
 };
