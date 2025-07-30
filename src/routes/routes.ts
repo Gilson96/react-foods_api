@@ -9,8 +9,10 @@ const paymentOperations = require("../controllers/paymentController");
 const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 const { check } = require("express-validator");
-const multer = require("multer");
 const path = require("path");
+
+import { Request } from "express";
+import multer, { FileFilterCallback } from "multer";
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
@@ -19,9 +21,13 @@ interface MulterRequest extends Request {
 
 // === Multer setup ===
 const storage = multer.diskStorage({
-  destination: (req: Request, file: MulterRequest, cb) => cb(null, "uploads/"),
-  filename: (req: Request, file: MulterRequest, cb) => cb(null, Date.now() + "-" + file.originalname),
+  destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) =>
+    cb(null, "uploads/"),
+
+  filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) =>
+    cb(null, Date.now() + "-" + file.originalname),
 });
+
 const upload = multer({ storage });
 
 // category routes
