@@ -1,26 +1,45 @@
 import Food from "../model/foodData";
 import Restaurant from "../model/restaurantData";
 import { Request, Response } from "express";
+import { Multer } from "multer";
+
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+  files?: Express.Multer.File[];
+}
 
 // Create a Food
-exports.createFood = async (req: Request, res: Response) => {
+exports.createFood = async (req: MulterRequest, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
-    const createFood = await Food.create(req.body);
+    const foodImageFile =
+      req.file ||
+      (Array.isArray(req.files)
+        ? (req.files.find((f) => f.fieldname === "poster_image") as
+            | Express.Multer.File
+            | undefined)
+        : undefined);
 
-    const AddFoodToRestaurant = await Restaurant.findOneAndUpdate(
+    const foodPayload = {
+      ...req.body,
+      poster_image: foodImageFile?.path || "",
+      restaurant: restaurantId,
+    };
+
+    const createdFood = await Food.create(foodPayload);
+
+    const updatedRestaurant = await Restaurant.findOneAndUpdate(
       { _id: restaurantId },
-      { $push: { foods: createFood } },
+      { $push: { foods: createdFood._id } },
       { new: true }
     );
 
-    res.status(200).json(AddFoodToRestaurant);
+    res.status(200).json(updatedRestaurant);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
-    }
+    res.status(404).json({
+      message:
+        error instanceof Error ? error.message : "Unknown error occurred",
+    });
   }
 };
 
@@ -28,7 +47,7 @@ exports.createFood = async (req: Request, res: Response) => {
 exports.getFoods = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
-    const foods = await Food.find()
+    const foods = await Food.find();
 
     res.status(200).json(foods);
   } catch (error) {
@@ -99,4 +118,3 @@ exports.deleteFood = async (req: Request, res: Response) => {
     }
   }
 };
-
