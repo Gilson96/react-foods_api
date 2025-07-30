@@ -4,7 +4,7 @@ import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
-exports.signup = async (req: Request, res: Response, next: NextFunction) => {
+const signup = async (req: Request, res: Response, next: NextFunction) => {
   // inputs validation
   // with 'express-validator'
   const errors = validationResult(req);
@@ -84,7 +84,7 @@ exports.signup = async (req: Request, res: Response, next: NextFunction) => {
     .send({ userId: createdUser.id, email: createdUser.email, token: token });
 };
 
-exports.login = async (req: Request, res: Response, next: NextFunction) => {
+const login = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
   let existingUser;
@@ -148,9 +148,11 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-exports.logout = (req: Request, res: Response) => {
+const logout = (req: Request, res: Response) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204); //No content
   res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true });
   res.json({ message: "Cookie cleared" });
 };
+
+export default { login, logout, signup };

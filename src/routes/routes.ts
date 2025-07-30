@@ -1,43 +1,45 @@
-const express = require("express");
-const foodOperations = require("../controllers/foodController");
-const ratingAndReviewsOperations = require("../controllers/ratingReviewsController");
-const restaurantOperations = require("../controllers/RestaurantController");
-const authOperations = require("../controllers/authController");
-const userOperations = require("../controllers/userController");
-const categoryOperations = require("../controllers/categoryController");
-const paymentOperations = require("../controllers/paymentController");
-const checkAuth = require("../middleware/check-auth");
+// src/routes/routes.ts
+import express, { Request } from "express";
+import multer from "multer";
+import { check } from "express-validator";
+import * as foodOperations from "../controllers/foodController";
+import ratingAndReviewsOperations from "../controllers/ratingReviewsController";
+import restaurantOperations from "../controllers/RestaurantController";
+import authOperations from "../controllers/authController";
+import userOperations from "../controllers/userController";
+import categoryOperations from "../controllers/categoryController";
+import paymentOperations from "../controllers/paymentController";
+import checkAuth from "../middleware/check-auth";
+
 const router = express.Router();
-const { check } = require("express-validator");
-const path = require("path");
-
-import { Request } from "express";
-import multer, { FileFilterCallback } from "multer";
-
-interface MulterRequest extends Request {
-  file?: Express.Multer.File;
-  files?: Express.Multer.File[];
-}
 
 // === Multer setup ===
 const storage = multer.diskStorage({
-  destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) =>
-    cb(null, "uploads/"),
+  destination: (
+    req: Request,
+    file: Express.Multer.File,
+    cb: (error: Error | null, destination: string) => void
+  ) => cb(null, "uploads/"),
 
-  filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) =>
-    cb(null, Date.now() + "-" + file.originalname),
+  filename: (
+    req: Request,
+    file: Express.Multer.File,
+    cb: (error: Error | null, filename: string) => void
+  ) => cb(null, Date.now() + "-" + file.originalname),
 });
 
 const upload = multer({ storage });
 
-// category routes
+// === Routes ===
+
+// Category routes
 router.post("/category", categoryOperations.createCategory);
 router.get("/categories", categoryOperations.getCategories);
 router.get("/category/:categoryId", categoryOperations.getCategory);
 router.put("/category/:categoryId", categoryOperations.updateCategory);
 router.delete("/category/:categoryId", categoryOperations.deleteCategory);
 
-// restaurant routes
+// Restaurant routes
 router.post(
   "/restaurant/:categoryId",
   upload.fields([
@@ -54,18 +56,14 @@ router.delete(
   restaurantOperations.deleteRestaurant
 );
 
-// food routes
-router.post(
-  "/:restaurantId/food",
-  upload.single("poster_image"),
-  foodOperations.createFood
-);
+// Food routes
+router.post("/:restaurantId/food", upload.single("poster_image"), foodOperations.createFood);
 router.get("/foods", foodOperations.getFoods);
 router.get("/:restaurantId/food/:foodId", foodOperations.getFood);
 router.put("/:restaurantId/food/:foodId", foodOperations.updateFood);
 router.delete("/:restaurantId/food/:foodId", foodOperations.deleteFood);
 
-// rating & reviews routes
+// Reviews
 router.post(
   "/:restaurantId/reviews",
   ratingAndReviewsOperations.createRatingAndReview
@@ -87,10 +85,10 @@ router.delete(
   ratingAndReviewsOperations.deleteRatingAndReview
 );
 
-// payment
+// Payment
 router.post("/payment-intent", paymentOperations.create_payment_intent);
 
-// auth
+// Auth
 router.post(
   "/signup",
   [
@@ -100,25 +98,25 @@ router.post(
   ],
   authOperations.signup
 );
-
 router.post("/login", authOperations.login);
 router.post("/logout", authOperations.logout);
 
-// users
+// Users
 router.get("/user", userOperations.getUsers);
 router.put("/user/:userId", userOperations.editUser);
-router.post(":userId/favourites/", userOperations.AddFavouriteRestaurants);
+router.post("/:userId/favourites/", userOperations.AddFavouriteRestaurants);
 router.post(
-  ":userId/favourites/:restaurantId",
+  "/:userId/favourites/:restaurantId",
   userOperations.RemoveFavouriteRestaurants
 );
-router.post(":userId/orders", userOperations.AddOrders);
-router.post(":userId/orders/:foodId", userOperations.RemoveOrdersRestaurants);
+router.post("/:userId/orders", userOperations.AddOrders);
+router.post("/:userId/orders/:foodId", userOperations.RemoveOrdersRestaurants);
 router.post(
   "/:userId",
   userOperations.VerifyAdminRole,
   restaurantOperations.createRestaurant
 );
-router.delete(":userId/delete", userOperations.UserDelete);
+router.delete("/:userId/delete", userOperations.UserDelete);
 
-module.exports = router;
+// ✅ Export the router
+export default router;

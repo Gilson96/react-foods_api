@@ -3,7 +3,7 @@ import Restaurant from "../model/restaurantData";
 import { Request, Response } from "express";
 
 // Create a RatingAndReview
-exports.createRatingAndReview = async (
+const createRatingAndReview = async (
   req: Request<{ restaurantId: string }>,
   res: Response
 ) => {
@@ -27,7 +27,7 @@ exports.createRatingAndReview = async (
 };
 
 // Get all RatingAndReview data
-exports.getRatingAndReviews = async (req: Request, res: Response) => {
+const getRatingAndReviews = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
     const ratingAndReviews = await Restaurant.findOne({
@@ -45,7 +45,7 @@ exports.getRatingAndReviews = async (req: Request, res: Response) => {
 };
 
 // Get a specific RatingAndReview
-exports.getRatingAndReview = async (req: Request, res: Response) => {
+const getRatingAndReview = async (req: Request, res: Response) => {
   const reviewsId = req.params.reviewsId;
   const restaurantId = req.params.restaurantId;
   try {
@@ -64,7 +64,7 @@ exports.getRatingAndReview = async (req: Request, res: Response) => {
 };
 
 // Update a RatingAndReview
-exports.updateRatingAndReview = async (req: Request, res: Response) => {
+const updateRatingAndReview = async (req: Request, res: Response) => {
   const reviewsId = req.params.reviewsId;
   try {
     const updatedRatingAndReview = await RatingAndReview.findOneAndUpdate(
@@ -83,7 +83,7 @@ exports.updateRatingAndReview = async (req: Request, res: Response) => {
 };
 
 // Delete a RatingAndReview
-exports.deleteRatingAndReview = async (req: Request, res: Response) => {
+const deleteRatingAndReview = async (req: Request, res: Response) => {
   const reviewsId = req.params.reviewsId;
   const restaurantId = req.params.restaurantId;
   try {
@@ -101,4 +101,12 @@ exports.deleteRatingAndReview = async (req: Request, res: Response) => {
       res.status(404).json({ message: "Unknown error occurred" });
     }
   }
+};
+
+export default {
+  createRatingAndReview,
+  updateRatingAndReview,
+  getRatingAndReview,
+  getRatingAndReviews,
+  deleteRatingAndReview,
 };

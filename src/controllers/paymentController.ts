@@ -5,8 +5,7 @@ dotenv.config({ path: __dirname + "/.env" });
 const stripe = require("stripe")(
   "sk_test_51RM9WqQc9p8NGwhTVWaT5PLExXNFPJBerqfEWc6TrtKhhQK7WBNtG0iSSs4MlRZWAGqTsimEecW1AF3cn39RGIMm00YDaNWQfJ"
 );
-
-exports.create_payment_intent = async (req: Request, res: Response) => {
+const create_payment_intent = async (req: Request, res: Response) => {
   const { totalPrice } = req.body;
 
   try {
@@ -22,3 +21,5 @@ exports.create_payment_intent = async (req: Request, res: Response) => {
     res.status(500).json({ message: err });
   }
 };
+
+export default { create_payment_intent };

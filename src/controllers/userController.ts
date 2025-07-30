@@ -1,7 +1,7 @@
 import User from "../model/userData";
 import { Request, Response, NextFunction } from "express";
 
-exports.getUsers = async (req: Request, res: Response) => {
+const getUsers = async (req: Request, res: Response) => {
   try {
     const user = await User.find();
     res.status(200).json(user);
@@ -13,7 +13,7 @@ exports.getUsers = async (req: Request, res: Response) => {
     }
   }
 };
-exports.editUser = async (req: Request, res: Response) => {
+const editUser = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   try {
     const updatedRestaurant = await User.findOneAndUpdate(
@@ -31,7 +31,7 @@ exports.editUser = async (req: Request, res: Response) => {
   }
 };
 
-exports.UserDelete = async (req: Request, res: Response) => {
+const UserDelete = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   try {
     const updatedOrders = await User.findOneAndDelete({
@@ -47,7 +47,7 @@ exports.UserDelete = async (req: Request, res: Response) => {
   }
 };
 
-exports.AddFavouriteRestaurants = async (req: Request, res: Response) => {
+const AddFavouriteRestaurants = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   try {
     const updatedFavourite = await User.findOneAndUpdate(
@@ -65,7 +65,7 @@ exports.AddFavouriteRestaurants = async (req: Request, res: Response) => {
   }
 };
 
-exports.RemoveFavouriteRestaurants = async (req: Request, res: Response) => {
+const RemoveFavouriteRestaurants = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   const restaurantId = req.params.restaurantId;
   try {
@@ -84,7 +84,7 @@ exports.RemoveFavouriteRestaurants = async (req: Request, res: Response) => {
   }
 };
 
-exports.AddOrders = async (req: Request, res: Response) => {
+const AddOrders = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   try {
     const updatedOrders = await User.findOneAndUpdate(
@@ -102,7 +102,7 @@ exports.AddOrders = async (req: Request, res: Response) => {
   }
 };
 
-exports.RemoveOrdersRestaurants = async (req: Request, res: Response) => {
+const RemoveOrdersRestaurants = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   const foodId = req.params.foodId;
   try {
@@ -121,7 +121,7 @@ exports.RemoveOrdersRestaurants = async (req: Request, res: Response) => {
   }
 };
 
-exports.VerifyAdminRole = async (
+const VerifyAdminRole = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -135,4 +135,15 @@ exports.VerifyAdminRole = async (
   } catch (error) {
     res.status(500).json({ message: "Authorization check failed." });
   }
+};
+
+export default {
+  AddFavouriteRestaurants,
+  AddOrders,
+  RemoveFavouriteRestaurants,
+  RemoveOrdersRestaurants,
+  editUser,
+  VerifyAdminRole,
+  getUsers,
+  UserDelete,
 };

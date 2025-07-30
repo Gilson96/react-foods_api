@@ -2,7 +2,7 @@ import Category from "../model/categoryData";
 import { Request, Response } from "express";
 
 // Create a Category
-exports.createCategory = async (req: Request, res: Response) => {
+const createCategory = async (req: Request, res: Response) => {
   try {
     const createCategory = await Category.create(req.body);
     res.status(200).json(createCategory);
@@ -16,7 +16,7 @@ exports.createCategory = async (req: Request, res: Response) => {
 };
 
 // Get all Category data
-exports.getCategories = async (req: Request, res: Response) => {
+const getCategories = async (req: Request, res: Response) => {
   try {
     const categories = await Category.find();
     res.status(200).json(categories);
@@ -30,7 +30,7 @@ exports.getCategories = async (req: Request, res: Response) => {
 };
 
 // Get a specific Category
-exports.getCategory = async (req: Request, res: Response) => {
+const getCategory = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
   try {
     const category = await Category.findOne({ _id: categoryId }).populate(
@@ -48,7 +48,7 @@ exports.getCategory = async (req: Request, res: Response) => {
 };
 
 // Update a Category
-exports.updateCategory = async (req: Request, res: Response) => {
+const updateCategory = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
   try {
     const updatedCategory = await Category.findOneAndUpdate(
@@ -67,7 +67,7 @@ exports.updateCategory = async (req: Request, res: Response) => {
 };
 
 // Delete a Category
-exports.deleteCategory = async (req: Request, res: Response) => {
+const deleteCategory = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
   try {
     await Category.findByIdAndDelete({ _id: categoryId });
@@ -79,4 +79,12 @@ exports.deleteCategory = async (req: Request, res: Response) => {
       res.status(404).json({ message: "Unknown error occurred" });
     }
   }
+};
+
+export default {
+  createCategory,
+  getCategories,
+  getCategory,
+  updateCategory,
+  deleteCategory,
 };

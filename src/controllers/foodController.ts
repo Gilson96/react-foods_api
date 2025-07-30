@@ -1,15 +1,16 @@
 import Food from "../model/foodData";
 import Restaurant from "../model/restaurantData";
 import { Request, Response } from "express";
-import { Multer } from "multer";
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
-  files?: Express.Multer.File[];
+  files?:
+    | Express.Multer.File[]
+    | { [fieldname: string]: Express.Multer.File[] };
 }
 
 // Create a Food
-exports.createFood = async (req: MulterRequest, res: Response) => {
+const createFood = async (req: MulterRequest, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
     const foodImageFile =
@@ -44,7 +45,7 @@ exports.createFood = async (req: MulterRequest, res: Response) => {
 };
 
 // Get all Food data
-exports.getFoods = async (req: Request, res: Response) => {
+const getFoods = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
     const foods = await Food.find();
@@ -60,7 +61,7 @@ exports.getFoods = async (req: Request, res: Response) => {
 };
 
 // Get a specific Food
-exports.getFood = async (req: Request, res: Response) => {
+const getFood = async (req: Request, res: Response) => {
   const foodId = req.params.foodId;
   const restaurantId = req.params.restaurantId;
   try {
@@ -80,7 +81,7 @@ exports.getFood = async (req: Request, res: Response) => {
 };
 
 // Update a Food
-exports.updateFood = async (req: Request, res: Response) => {
+const updateFood = async (req: Request, res: Response) => {
   const foodId = req.params.foodId;
   try {
     const updatedFood = await Food.findOneAndUpdate({ _id: foodId }, req.body, {
@@ -97,7 +98,7 @@ exports.updateFood = async (req: Request, res: Response) => {
 };
 
 // Delete a Food
-exports.deleteFood = async (req: Request, res: Response) => {
+const deleteFood = async (req: Request, res: Response) => {
   const foodId = req.params.foodId;
   const restaurantId = req.params.restaurantId;
   try {
@@ -118,3 +119,5 @@ exports.deleteFood = async (req: Request, res: Response) => {
     }
   }
 };
+
+export { createFood, getFood, getFoods, deleteFood, updateFood };

@@ -3,7 +3,7 @@ import Category from "../model/categoryData";
 import { Request, Response } from "express";
 
 // Create a Restaurant
-exports.createRestaurant = async (req: Request, res: Response) => {
+const createRestaurant = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
   try {
     const createRestaurant = await Restaurant.create(req.body);
@@ -23,7 +23,7 @@ exports.createRestaurant = async (req: Request, res: Response) => {
 };
 
 // Get all Restaurant data
-exports.getRestaurants = async (req: Request, res: Response) => {
+const getRestaurants = async (req: Request, res: Response) => {
   try {
     const Restaurants = await Restaurant.find();
     res.status(200).json(Restaurants);
@@ -37,7 +37,7 @@ exports.getRestaurants = async (req: Request, res: Response) => {
 };
 
 // Get a specific Restaurant
-exports.getRestaurant = async (req: Request, res: Response) => {
+const getRestaurant = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
     const restaurant = await Restaurant.findOne({ _id: restaurantId });
@@ -52,7 +52,7 @@ exports.getRestaurant = async (req: Request, res: Response) => {
 };
 
 // Update a Restaurant
-exports.updateRestaurant = async (req: Request, res: Response) => {
+const updateRestaurant = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
     const updatedRestaurant = await Restaurant.findOneAndUpdate(
@@ -71,7 +71,7 @@ exports.updateRestaurant = async (req: Request, res: Response) => {
 };
 
 // Delete a Restaurant
-exports.deleteRestaurant = async (req: Request, res: Response) => {
+const deleteRestaurant = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   const categoryId = req.params.categoryId;
   try {
@@ -93,4 +93,12 @@ exports.deleteRestaurant = async (req: Request, res: Response) => {
       res.status(404).json({ message: "Unknown error occurred" });
     }
   }
+};
+
+export default {
+  createRestaurant,
+  deleteRestaurant,
+  getRestaurant,
+  getRestaurants,
+  updateRestaurant,
 };

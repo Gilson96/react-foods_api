@@ -5,6 +5,7 @@ import connectDB from "./dbConnection";
 import foodRouter from "./routes/routes";
 import mongoose from "mongoose";
 import path from "path";
+import routes from "./routes/routes";
 
 dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
@@ -27,7 +28,7 @@ app.use(
 app.use(express.json());
 
 // Routes
-app.use("/", foodRouter);
+app.use("/", routes);
 
 const PORT = process.env.PORT || 5050;
 
@@ -41,4 +42,3 @@ mongoose.connection.once("open", () => {
 mongoose.connection.on("error", (err) => {
   console.log(err);
 });
-
