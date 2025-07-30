@@ -115,7 +115,19 @@ router.post(
 );
 router.post("/:userId/orders", userOperations.AddOrders);
 router.post("/:userId/orders/:foodId", userOperations.RemoveOrdersRestaurants);
-router.post("/:userId", restaurantOperations.createRestaurant);
+router.post(
+  "/restaurant/:categoryId",
+  upload.fields([
+    { name: "poster_image", maxCount: 1 },
+    { name: "logo_image", maxCount: 1 },
+  ]),
+  restaurantOperations.createRestaurant
+);
+router.post(
+  "/:restaurantId/food",
+  upload.single("poster_image"),
+  foodOperations.createFood
+);
 router.delete("/:userId/delete", userOperations.UserDelete);
 
 export default router;
