@@ -4,11 +4,9 @@ const { Schema } = mongoose;
 const restaurantSchema = new Schema({
   name: {
     type: String,
-    required: true,
   },
   address: {
     type: String,
-    required: true,
   },
   poster_image: {
     type: String,
@@ -28,7 +26,6 @@ const restaurantSchema = new Schema({
   foods: [
     {
       type: mongoose.Types.ObjectId,
-      required: true,
       ref: "Food",
     },
   ],
