@@ -2,26 +2,42 @@ import Restaurant from "../model/restaurantData";
 import Category from "../model/categoryData";
 import { Request, Response } from "express";
 
+interface MulterRequest extends Request {
+  files?: {
+    [fieldname: string]: Express.Multer.File[];
+  };
+}
+
 // Create a Restaurant
-const createRestaurant = async (req: Request, res: Response) => {
+export const createRestaurant = async (req: MulterRequest, res: Response) => {
   const categoryId = req.params.categoryId;
+
   try {
-    const createRestaurant = await Restaurant.create(req.body);
-    const AddRestaurantToCategory = await Category.findOneAndUpdate(
-      { _id: categoryId },
-      { $push: { restaurants: createRestaurant } },
+    const posterImage = req.files?.poster_image?.[0]?.path || "";
+    const logoImage = req.files?.logo_image?.[0]?.path || "";
+
+    const restaurantPayload = {
+      ...req.body,
+      poster_image: posterImage, // now a string (file path)
+      logo_image: logoImage, // now a string (file path)
+      category: categoryId,
+    };
+
+    const createdRestaurant = await Restaurant.create(restaurantPayload);
+
+    const updatedCategory = await Category.findByIdAndUpdate(
+      categoryId,
+      { $push: { restaurants: createdRestaurant._id } },
       { new: true }
     );
-    res.status(200).json(AddRestaurantToCategory);
+
+    res.status(200).json(updatedCategory);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
-    }
+    res.status(500).json({
+      message: error instanceof Error ? error.message : "Unknown server error",
+    });
   }
 };
-
 // Get all Restaurant data
 const getRestaurants = async (req: Request, res: Response) => {
   try {
