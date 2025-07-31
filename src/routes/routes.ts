@@ -131,7 +131,7 @@ router.post(
 );
 router.delete("/:userId/delete", userOperations.UserDelete);
 // image upload route
-router.get("/auth", (req, res) => {
+router.get("/imageUpload", (req, res) => {
   const timestamp = Math.floor(Date.now() / 1000);
   const token = crypto.randomBytes(16).toString("hex");
 
