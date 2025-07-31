@@ -5,7 +5,6 @@ import connectDB from "./dbConnection";
 import mongoose from "mongoose";
 import path from "path";
 import routes from "./routes/routes";
-import uploadAuthRoutes from "./routes/uploadRoutes";
 
 dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
@@ -29,7 +28,6 @@ app.use(express.json());
 
 // Routes
 app.use("/", routes);
-app.use("/", uploadAuthRoutes);
 
 const PORT = process.env.PORT || 5050;
 

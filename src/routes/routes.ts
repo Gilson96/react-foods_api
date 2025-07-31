@@ -10,7 +10,7 @@ import userOperations from "../controllers/userController";
 import categoryOperations from "../controllers/categoryController";
 import paymentOperations from "../controllers/paymentController";
 import checkAuth from "../middleware/check-auth";
-import crypto from "crypto";
+import { imagekit } from "./uploadImage";
 
 const router = express.Router();
 
@@ -131,19 +131,8 @@ router.post(
 );
 router.delete("/:userId/delete", userOperations.UserDelete);
 // image upload route
-router.get("/imageUpload", (req, res) => {
-  const timestamp = Math.floor(Date.now() / 1000);
-  const token = crypto.randomBytes(16).toString("hex");
-
-  const signature = crypto
-    .createHmac("sha1", process.env.IMAGEKIT_PRIVATE_KEY!)
-    .update(token + timestamp)
-    .digest("hex");
-
-  res.json({
-    token,
-    expire: timestamp + 240,
-    signature,
-  });
+router.get("/imagekit-auth", (req, res) => {
+  const authParams = imagekit.getAuthenticationParameters();
+  res.json(authParams);
 });
 export default router;
