@@ -23,6 +23,9 @@ const restaurantSchema = new Schema({
   arrival: {
     type: Number,
   },
+  admin: {
+    type: String,
+  },
   foods: [
     {
       type: mongoose.Types.ObjectId,
@@ -37,7 +40,6 @@ const restaurantSchema = new Schema({
   ],
   category: {
     type: mongoose.Types.ObjectId,
-    required: true,
     ref: "Category",
   },
 });
