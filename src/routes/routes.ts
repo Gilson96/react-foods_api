@@ -1,5 +1,5 @@
 // src/routes/routes.ts
-import express, { Request } from "express";
+import express, { Request, RequestHandler } from "express";
 import multer from "multer";
 import { check } from "express-validator";
 import * as foodOperations from "../controllers/foodController";
@@ -46,7 +46,7 @@ router.post(
     { name: "poster_image", maxCount: 1 },
     { name: "logo_image", maxCount: 1 },
   ]),
-  restaurantOperations.createRestaurant
+  restaurantOperations.createRestaurant as RequestHandler
 );
 router.get("/restaurants", restaurantOperations.getRestaurants);
 router.get("/restaurant/:restaurantId", restaurantOperations.getRestaurant);
@@ -60,7 +60,7 @@ router.delete(
 router.post(
   "/:restaurantId/food",
   upload.single("poster_image"),
-  foodOperations.createFood
+  foodOperations.createFood as RequestHandler
 );
 router.get("/foods", foodOperations.getFoods);
 router.get("/:restaurantId/food/:foodId", foodOperations.getFood);
@@ -121,12 +121,12 @@ router.post(
     { name: "poster_image", maxCount: 1 },
     { name: "logo_image", maxCount: 1 },
   ]),
-  restaurantOperations.createRestaurant
+  restaurantOperations.createRestaurant as RequestHandler
 );
 router.post(
   "/:restaurantId/food",
   upload.single("poster_image"),
-  foodOperations.createFood
+  foodOperations.createFood as RequestHandler
 );
 router.delete("/:userId/delete", userOperations.UserDelete);
 
