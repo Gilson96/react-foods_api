@@ -71,6 +71,7 @@ router.delete("/:restaurantId/food/:foodId", foodOperations.deleteFood);
 // Reviews
 router.post(
   "/:restaurantId/reviews",
+  upload.none(),
   ratingAndReviewsOperations.createRatingAndReview
 );
 router.get(
