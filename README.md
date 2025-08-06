@@ -1,38 +1,70 @@
 # 🍽️ MERN Foods – Backend API (Node.js + Express + MongoDB)
----
 
-## 📌 Overview
-
-This is the backend API powering **MERN Foods**, a full-stack Uber Eats-style web application. Built with **Node.js**, **Express**, and **MongoDB Atlas**, this API handles user authentication, CRUD operations for products and categories, cart management, and secure Stripe payments.
-
-The backend follows RESTful principles and includes robust middleware for error handling and authentication, making it scalable, secure, and ready for production.
+An **Node.js + Express backend** API with RESTful routes, authentication, and image uploads for the Mern-Foods full-stack application.
 
 ---
 
-## ✨ Key Features
+## 🔧 Built With
 
-- 🔐 **JWT Authentication** – Secure login and registration
-- 🧾 **User Roles** – Basic role-based access for users/admins
-- 🛒 **Cart & Order Handling** – Cart logic managed on the frontend with order validation here
-- 📂 **Product & Category Endpoints** – Full CRUD functionality
-- 💳 **Stripe Integration** – Test mode payment processing via Stripe API
-- ⚙️ **Middleware** – Custom error handling, logging, and auth middleware
-- 🌐 **Hosted on Heroku** – Deployed with environmental variables and MongoDB Atlas
+- **Node.js** and **Express.js**
+- **MongoDB** with **Mongoose** ORM
+- **JWT authentication** using httpOnly cookies
+- **Multer** for secure image uploads
+- **Express-Validator** & **Zod** for input validation
+- **Helmet**, **compression**, and **rate-limit** for performance & security
+- **ImageKit** for media handling
+- Hosted on **Heroku**
+  
+---
+
+## 🚀 Features
+
+- Full CRUD for Restaurants, Foods, Reviews, and Categories
+- Role-based access control (Admin vs User)
+- Secure photo uploads with size/type validation
+- JWT using httpOnly cookies for authentication
+- API endpoints aligned to REST best practices
+- Rate limiting to prevent abuse
+- CORS restricted to allowed frontend domains
 
 ---
 
-## 💻 Tech Stack
+## 📁 Sample Environment File (`.env.example`)
 
-| Technology    | Description                        |
-|---------------|------------------------------------|
-| **Node.js**   | JavaScript runtime                 |
-| **Express.js**| Backend framework                  |
-| **MongoDB**   | Cloud NoSQL database               |
-| **Mongoose**  | ODM for MongoDB                    |
-| **Stripe API**| Payment gateway                    |
-| **JWT**       | Authentication tokens              |
-| **Heroku**    | Deployment platform                |
-| **dotenv**    | Environment variable management    |
+```env
+MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<db>?retryWrites=true&w=majority
+JWT_SECRET=enter_secure_jwt_secret
+STRIPE_SECRET_KEY=sk_test_your_stripe_key
+IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
+IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your_endpoint
+CLIENT_URL=https://your-frontend-domain.com
+LOCAL_URL=http://localhost:5173
+
+```
+--- 
+
+## 🗂 API Endpoints
+
+Public Access
+
+| Method | Endpoint                      | Description                   |
+| ------ | ----------------------------- | ----------------------------- |
+| GET    | /categories                   | Fetch all categories          |
+| GET    | /restaurants                  | List all restaurants          |
+| GET    | /foods                        | List all foods                |
+| GET    | /\:restaurantId/food/\:foodId | Get single food details       |
+| GET    | /\:restaurantId/reviews       | List reviews for a restaurant |
+| POST   | /payment-intent               | Create Stripe payment intent  |
+| POST   | /signup, /login, /logout      | Authentication routes         |
+
+### Authenticated Users
+
+- GET /user, PUT /user/:userId, favorite & order routes
+
+### Admin Only
+
+- POST /category, CRUD routes for restaurants & foods, delete reviewss
 
 ---
 
@@ -57,54 +89,34 @@ react-foods_api/
 
 ## 🧭 How to Run Locally
 
-### 1. Clone & Install
-
 ```bash
 git clone https://github.com/Gilson96/react-foods_api.git
 cd react-foods_api
 npm install
-```
-
-### 2. Configure Environment
-```bash
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-STRIPE_SECRET_KEY=your_stripe_secret_key
-```
-
-### 3. Start the Server
-```bash
+cp .env.example .env
+# Fill in your credentials
 npm run dev
+# Visit http://localhost:5000 to confirm API is running.
 ```
-
-## 🔐 Example Endpoints
-
-| Method | Endpoint             | Description                  |
-| ------ | -------------------- | ---------------------------- |
-| POST   | `/signup`            | Create new user              |
-| POST   | `/login`             | Log in and return JWT token  |
-| GET    | `/restaurant`        | Fetch all restaurants        |
-| GET    | `/category`          | List restaurant categories   |
-| POST   | `/:userId/orders`    | Place an order (with Stripe) |
-
-## 📦 Deployment
-The API is hosted on Heroku and connected to MongoDB Atlas. To deploy:
-
-Push your code to a GitHub repo
-
-Create a Heroku app
-
-Connect to GitHub in Heroku settings
-
-Add config vars under “Settings” in Heroku
-
-
-## ✅ Future Improvements
-
-🔒 Admin role and dashboard
-
 ---
 
+### ✅ Quality Assurance
+
+✅ JWT-based authentication with secure cookies
+
+✅ Admin-only action protection with requireAdmin middleware
+
+✅ File uploads validated by Multer (size/type)
+
+✅ CORS only allows trusted origins
+
+✅ Rate limiting prevents brute-force attacks
+
+✅ Error handling centralised via custom middleware
+
+✅ Clean, commented code with clear folder structure and consistent command of TypeScript
+
+--- 
 
 🤝 Contact
 
