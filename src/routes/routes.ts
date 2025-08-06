@@ -8,41 +8,36 @@ import userOperations from "../controllers/userController";
 import categoryOperations from "../controllers/categoryController";
 import paymentOperations from "../controllers/paymentController";
 import checkAuth from "../middleware/check-auth";
+import { requireAdmin } from "../middleware/requireAdmin";
 import { imagekit } from "./uploadImage";
 import upload from "../controllers/multerConfig";
 
 const router = express.Router();
 
-// === Routes ===
-// Category routes
-router.post("/category", categoryOperations.createCategory);
+/* ===========================
+   Public Routes
+=========================== */
+
+// Category browsing
 router.get("/categories", categoryOperations.getCategories);
 router.get("/category/:categoryId", categoryOperations.getCategory);
-router.put("/category/:categoryId", categoryOperations.updateCategory);
-router.delete("/category/:categoryId", categoryOperations.deleteCategory);
 
-// Restaurant routes
+// Restaurant browsing
 router.get("/restaurants", restaurantOperations.getRestaurants);
 router.get("/restaurant/:restaurantId", restaurantOperations.getRestaurant);
 
-// Food routes
+// Food browsing
 router.get("/foods", foodOperations.getFoods);
 router.get("/:restaurantId/food/:foodId", foodOperations.getFood);
 
-// Reviews
-router.get(
-  "/:restaurantId/reviews",
-  ratingAndReviewsOperations.getRatingAndReviews
-);
-router.get(
-  "/:restaurantId/reviews/:reviewsId",
-  ratingAndReviewsOperations.getRatingAndReview
-);
+// Reviews browsing
+router.get("/:restaurantId/reviews", ratingAndReviewsOperations.getRatingAndReviews);
+router.get("/:restaurantId/reviews/:reviewsId", ratingAndReviewsOperations.getRatingAndReview);
 
 // Payment
 router.post("/payment-intent", paymentOperations.create_payment_intent);
 
-// Auth
+// Authentication
 router.post(
   "/signup",
   [
@@ -55,23 +50,31 @@ router.post(
 router.post("/login", authOperations.login);
 router.post("/logout", authOperations.logout);
 
-// middleware
+/* ===========================
+   Protected Routes (Auth Required)
+=========================== */
+
 router.use(checkAuth);
 
 // Users
 router.get("/user", userOperations.getUsers);
 router.put("/user/:userId", userOperations.editUser);
 router.post("/:userId/favourites/", userOperations.AddFavouriteRestaurants);
-router.post(
-  "/:userId/favourites/:restaurantId",
-  userOperations.RemoveFavouriteRestaurants
-);
+router.post("/:userId/favourites/:restaurantId", userOperations.RemoveFavouriteRestaurants);
 router.post("/:userId/orders", userOperations.AddOrders);
 router.post("/:userId/orders/:foodId", userOperations.RemoveOrdersRestaurants);
 
-//user restaurant actions
+/* ===========================
+   Admin-Only Routes
+=========================== */
+
+// Category management
+router.post("/category", requireAdmin, categoryOperations.createCategory);
+
+// Restaurant management
 router.post(
   "/restaurant/:categoryId",
+  requireAdmin,
   [
     check("name").isString().isLength({ min: 5 }),
     check("address").isString().isLength({ min: 10 }),
@@ -85,15 +88,13 @@ router.post(
   ]),
   restaurantOperations.createRestaurant as RequestHandler
 );
-router.put("/restaurant/:restaurantId", restaurantOperations.updateRestaurant);
-router.delete(
-  "/restaurant/:restaurantId/:categoryId",
-  restaurantOperations.deleteRestaurant
-);
+router.put("/restaurant/:restaurantId", requireAdmin, restaurantOperations.updateRestaurant);
+router.delete("/restaurant/:restaurantId/:categoryId", requireAdmin, restaurantOperations.deleteRestaurant);
 
-//user food actions
+// Food management
 router.post(
   "/:restaurantId/food",
+  requireAdmin,
   [
     check("name").isString().isLength({ min: 3 }),
     check("price").isNumeric().isLength({ min: 1 }),
@@ -102,25 +103,17 @@ router.post(
   upload.single("poster_image"),
   foodOperations.createFood as RequestHandler
 );
-router.put("/:restaurantId/food/:foodId", foodOperations.updateFood);
-router.delete("/:restaurantId/food/:foodId", foodOperations.deleteFood);
+router.put("/:restaurantId/food/:foodId", requireAdmin, foodOperations.updateFood);
+router.delete("/:restaurantId/food/:foodId", requireAdmin, foodOperations.deleteFood);
 
-//user reviews actions
-router.post(
-  "/:restaurantId/reviews/",
-  ratingAndReviewsOperations.createRatingAndReview
-);
-router.put(
-  "/:restaurantId/reviews/:reviewsId",
-  ratingAndReviewsOperations.updateRatingAndReview
-);
-router.delete(
-  "/:restaurantId/reviews/:reviewsId",
-  ratingAndReviewsOperations.deleteRatingAndReview
-);
+// Review management
+router.post("/:restaurantId/reviews", ratingAndReviewsOperations.createRatingAndReview);
+router.put("/:restaurantId/reviews/:reviewsId", ratingAndReviewsOperations.updateRatingAndReview);
+router.delete("/:restaurantId/reviews/:reviewsId", requireAdmin, ratingAndReviewsOperations.deleteRatingAndReview);
 
-
-// image upload route
+/* ===========================
+   Image Upload Auth
+=========================== */
 router.get("/imagekit-auth", (req, res) => {
   const authParams = imagekit.getAuthenticationParameters();
   res.json(authParams);

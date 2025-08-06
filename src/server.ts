@@ -23,8 +23,8 @@ const app: Application = express();
 // - Development: local frontend (Vite in your case)
 const allowedOrigins =
   process.env.NODE_ENV === "production"
-    ? ["https://your-production-frontend.com"]
-    : ["http://localhost:5173"];
+    ? process.env.CLIENT_URL
+    : process.env.LOCAL_URL;
 
 // ====== Security & Performance Middleware ======
 
