@@ -48,7 +48,7 @@ const createFood = async (req: MulterRequest, res: Response) => {
 const getFoods = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
-    const foods = await Food.find();
+    const foods = await Food.find().lean();
 
     res.status(200).json(foods);
   } catch (error) {
@@ -68,7 +68,7 @@ const getFood = async (req: Request, res: Response) => {
     const food = await Restaurant.find({ _id: restaurantId }).populate({
       path: "foods",
       match: { _id: foodId },
-    });
+    }).lean();
 
     res.status(200).json(food);
   } catch (error) {

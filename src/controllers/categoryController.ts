@@ -18,7 +18,7 @@ const createCategory = async (req: Request, res: Response) => {
 // Get all Category data
 const getCategories = async (req: Request, res: Response) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().lean();
     res.status(200).json(categories);
   } catch (error) {
     if (error instanceof Error) {
@@ -36,7 +36,7 @@ const getCategory = async (req: Request, res: Response) => {
     const category = await Category.findOne({ _id: categoryId }).populate(
       "restaurants",
       "-__v"
-    );
+    ).lean();
     res.status(200).json(category);
   } catch (error) {
     if (error instanceof Error) {

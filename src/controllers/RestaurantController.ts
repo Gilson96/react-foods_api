@@ -41,7 +41,7 @@ export const createRestaurant = async (req: MulterRequest, res: Response) => {
 // Get all Restaurant data
 const getRestaurants = async (req: Request, res: Response) => {
   try {
-    const Restaurants = await Restaurant.find();
+    const Restaurants = await Restaurant.find().lean();
     res.status(200).json(Restaurants);
   } catch (error) {
     if (error instanceof Error) {
@@ -56,7 +56,7 @@ const getRestaurants = async (req: Request, res: Response) => {
 const getRestaurant = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
-    const restaurant = await Restaurant.findOne({ _id: restaurantId });
+    const restaurant = await Restaurant.findOne({ _id: restaurantId }).lean();
     res.status(200).json(restaurant);
   } catch (error) {
     if (error instanceof Error) {

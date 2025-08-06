@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 
 const getUsers = async (req: Request, res: Response) => {
   try {
-    const user = await User.find();
+    const user = await User.find().select("-password");
     res.status(200).json(user);
   } catch (error) {
     if (error instanceof Error) {

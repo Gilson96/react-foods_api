@@ -76,12 +76,16 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     return next(error);
   }
 
-  // toObject convert mongoDB object
-  // into a POJO
-  // getters removes '_' from '_id'
+  // Store token in HttpOnly cookie
+  res.cookie("jwt", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 1000 // 1 hour
+  });
+
   res
     .status(201)
-    .send({ userId: createdUser.id, email: createdUser.email, token: token });
+    .send({ userId: createdUser.id, email: createdUser.email });
 };
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
@@ -139,20 +143,26 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     return next(error);
   }
 
+  res.cookie("jwt", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 1000
+  });
+
   res.json({
     userId: existingUser.id,
     email: existingUser.email,
     role: existingUser.role,
     address: existingUser.address,
-    token: token,
   });
 };
 
 const logout = (req: Request, res: Response) => {
-  const cookies = req.cookies;
-  if (!cookies?.jwt) return res.sendStatus(204); //No content
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true });
-  res.json({ message: "Cookie cleared" });
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.json({ message: "Logged out successfully" });
 };
 
 export default { login, logout, signup };

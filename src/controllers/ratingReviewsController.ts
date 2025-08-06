@@ -32,7 +32,7 @@ const getRatingAndReviews = async (req: Request, res: Response) => {
   try {
     const ratingAndReviews = await Restaurant.findOne({
       _id: restaurantId,
-    }).populate("ratings_and_reviews", "-__v");
+    }).populate("ratings_and_reviews", "-__v").lean();
 
     res.status(200).json(ratingAndReviews);
   } catch (error) {
@@ -51,7 +51,7 @@ const getRatingAndReview = async (req: Request, res: Response) => {
   try {
     const ratingAndReview = await Restaurant.findOne({
       _id: restaurantId,
-    }).populate({ path: "ratings_and_reviews", match: { _id: reviewsId } });
+    }).populate({ path: "ratings_and_reviews", match: { _id: reviewsId } }).lean();
 
     res.status(200).json(ratingAndReview);
   } catch (error) {
