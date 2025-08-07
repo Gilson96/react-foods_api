@@ -19,15 +19,12 @@ connectDB();
 const app: Application = express();
 
 // Define allowed origins based on environment
-// - Production: only your production frontend
-// - Development: local frontend (Vite in your case)
 const allowedOrigins =
   process.env.NODE_ENV === "production"
     ? process.env.CLIENT_URL
     : process.env.LOCAL_URL;
 
 // ====== Security & Performance Middleware ======
-
 // Enable CORS for allowed origins
 // - credentials: true allows cookies (HttpOnly JWT) to be sent
 app.use(
