@@ -29,7 +29,7 @@ const allowedOrigins =
 // - credentials: true allows cookies (HttpOnly JWT) to be sent
 app.use(
   cors({
-    origin:  "https://gilson96.github.io/mern-food",
+    origin: "https://gilson96.github.io/mern-food/",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true // Required for cookie-based authentication
