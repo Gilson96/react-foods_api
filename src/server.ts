@@ -22,7 +22,7 @@ const app: Application = express();
 const allowedOrigins =
   process.env.NODE_ENV === "production"
     ? process.env.CLIENT_URL
-    : process.env.LOCAL_URL;
+    : "http://localhost:5173";
 
 // ====== Security & Performance Middleware ======
 // Enable CORS for allowed origins
