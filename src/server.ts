@@ -29,14 +29,13 @@ const allowedOrigins =
 // - credentials: true allows cookies (HttpOnly JWT) to be sent
 app.use(
   cors({
-    origin: "https://gilson96.github.io",
+    origin: "https://mernfoods.netlify.app/",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true // Required for cookie-based authentication
   })
 );
 
-// Parse incoming JSON requests
 app.use(express.json());
 
 // Parse cookies from incoming requests (needed for HttpOnly JWT)
@@ -65,7 +64,6 @@ app.use("/", routes);
 // ====== Server startup ======
 const PORT = process.env.PORT || 5050;
 
-// Start server only after successful DB connection
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
   app.listen(PORT, () => {
@@ -73,7 +71,6 @@ mongoose.connection.once("open", () => {
   });
 });
 
-// Log DB connection errors
 mongoose.connection.on("error", (err) => {
   console.error("MongoDB connection error:", err);
 });
