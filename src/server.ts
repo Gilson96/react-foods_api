@@ -51,8 +51,8 @@ app.use(compression());
 // Apply general rate limiting to all requests
 // This limits each IP to 100 requests every 15 minutes
 const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 min
-  max: 20, // limit each IP
+  windowMs: 5 * 60 * 1000, // 5min
+  max: 100, // limit each IP
   message: "Too many requests, please try again later."
 });
 app.use(generalLimiter);
