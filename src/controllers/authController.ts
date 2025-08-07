@@ -45,9 +45,8 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 
     res.cookie("jwt", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 
     return res.status(201).json({
@@ -84,8 +83,9 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 
     res.cookie("jwt", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      secure: true,
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
 
     return res.json({
