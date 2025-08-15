@@ -30,7 +30,7 @@ console.log(allowedOrigins)
 // - credentials: true allows cookies (HttpOnly JWT) to be sent
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true // Required for cookie-based authentication
