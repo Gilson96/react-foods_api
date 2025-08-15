@@ -22,14 +22,14 @@ const app: Application = express();
 const allowedOrigins =
   process.env.NODE_ENV === "production"
     ? process.env.CLIENT_URL
-    : "http://localhost:5173";
+    : process.env.LOCAL_URL;
 
 // ====== Security & Performance Middleware ======
 // Enable CORS for allowed origins
 // - credentials: true allows cookies (HttpOnly JWT) to be sent
 app.use(
   cors({
-    origin: "https://mernfoods.netlify.app",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true // Required for cookie-based authentication
