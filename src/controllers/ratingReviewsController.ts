@@ -2,7 +2,6 @@ import RatingAndReview from "../model/ratingsReviewsData";
 import Restaurant from "../model/restaurantData";
 import { Request, Response } from "express";
 
-// Create a RatingAndReview
 const createRatingAndReview = async (
   req: Request<{ restaurantId: string }>,
   res: Response
@@ -26,7 +25,6 @@ const createRatingAndReview = async (
   }
 };
 
-// Get all RatingAndReview data
 const getRatingAndReviews = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
@@ -44,7 +42,6 @@ const getRatingAndReviews = async (req: Request, res: Response) => {
   }
 };
 
-// Get a specific RatingAndReview
 const getRatingAndReview = async (req: Request, res: Response) => {
   const reviewsId = req.params.reviewsId;
   const restaurantId = req.params.restaurantId;
@@ -63,7 +60,6 @@ const getRatingAndReview = async (req: Request, res: Response) => {
   }
 };
 
-// Update a RatingAndReview
 const updateRatingAndReview = async (req: Request, res: Response) => {
   const reviewsId = req.params.reviewsId;
   try {
@@ -82,7 +78,6 @@ const updateRatingAndReview = async (req: Request, res: Response) => {
   }
 };
 
-// Delete a RatingAndReview
 const deleteRatingAndReview = async (req: Request, res: Response) => {
   const reviewsId = req.params.reviewsId;
   const restaurantId = req.params.restaurantId;

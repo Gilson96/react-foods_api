@@ -8,7 +8,6 @@ interface MulterRequest extends Request {
   };
 }
 
-// Create a Restaurant
 export const createRestaurant = async (req: MulterRequest, res: Response) => {
   const categoryId = req.params.categoryId;
 
@@ -18,8 +17,8 @@ export const createRestaurant = async (req: MulterRequest, res: Response) => {
 
     const restaurantPayload = {
       ...req.body,
-      poster_image: posterImage, // now a string (file path)
-      logo_image: logoImage, // now a string (file path)
+      poster_image: posterImage, 
+      logo_image: logoImage,
       category: categoryId,
     };
 
@@ -38,7 +37,7 @@ export const createRestaurant = async (req: MulterRequest, res: Response) => {
     });
   }
 };
-// Get all Restaurant data
+
 const getRestaurants = async (req: Request, res: Response) => {
   try {
     const Restaurants = await Restaurant.find().lean();
@@ -52,7 +51,6 @@ const getRestaurants = async (req: Request, res: Response) => {
   }
 };
 
-// Get a specific Restaurant
 const getRestaurant = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
@@ -67,7 +65,6 @@ const getRestaurant = async (req: Request, res: Response) => {
   }
 };
 
-// Update a Restaurant
 const updateRestaurant = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
@@ -86,7 +83,6 @@ const updateRestaurant = async (req: Request, res: Response) => {
   }
 };
 
-// Delete a Restaurant
 const deleteRestaurant = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   const categoryId = req.params.categoryId;

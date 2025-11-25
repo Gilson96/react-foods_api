@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
-// const uniqueValidator = require('mongoose-unique-validator')
 
 const userSchema = new Schema({
   name: {
@@ -85,6 +84,5 @@ const userSchema = new Schema({
   ],
 });
 
-// userSchema.plugin(uniqueValidator)
 const user = mongoose.model("User", userSchema);
 export default user;

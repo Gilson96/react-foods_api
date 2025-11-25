@@ -7,7 +7,6 @@ import path from "path";
 import routes from "./routes/routes";
 import cookieParser from "cookie-parser";
 import compression from "compression";
-import rateLimit from "express-rate-limit";
 import helmet from "helmet"
 
 // Load environment variables from .env file
@@ -18,51 +17,23 @@ connectDB();
 
 const app: Application = express();
 
-
 // Define allowed origins based on environment
 const allowedOrigins =
   process.env.NODE_ENV === "production"
     ? "https://mernfoods.netlify.app"
     : "http://localhost:5173";
 
-console.log(allowedOrigins)
-// ====== Security & Performance Middleware ======
-// - credentials: true allows cookies (HttpOnly JWT) to be sent
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true // Required for cookie-based authentication
-  })
-);
-
+app.use(cors());
 app.use(express.json());
 
-// Parse cookies from incoming requests (needed for HttpOnly JWT)
+// Parse cookies from incoming requests
 app.use(cookieParser());
 
-// Set secure HTTP headers (Helmet helps prevent common web vulnerabilities)
-app.use(helmet());
-
-// Enable GZIP compression for responses (improves performance)
+// Enable GZIP compression for responses
 app.use(compression());
 
-// Apply general rate limiting to all requests
-// This limits each IP to 100 requests every 15 minutes
-const generalLimiter = rateLimit({
-  windowMs: 5 * 60 * 1000, // 5min
-  max: 100, // limit each IP
-  message: "Too many requests, please try again later."
-});
-app.use(generalLimiter);
-
-app.use(["/login", "/signup"], generalLimiter);
-
-// ====== Routes ======
 app.use("/", routes);
 
-// ====== Server startup ======
 const PORT = process.env.PORT || 5050;
 
 mongoose.connection.once("open", () => {

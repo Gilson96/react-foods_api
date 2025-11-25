@@ -1,4 +1,3 @@
-// multerConfig.ts
 import multer, { FileFilterCallback } from "multer";
 import fs from "fs";
 import path from "path";

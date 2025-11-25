@@ -1,7 +1,6 @@
 import Category from "../model/categoryData";
 import { Request, Response } from "express";
 
-// Create a Category
 const createCategory = async (req: Request, res: Response) => {
   try {
     const createCategory = await Category.create(req.body);
@@ -15,7 +14,6 @@ const createCategory = async (req: Request, res: Response) => {
   }
 };
 
-// Get all Category data
 const getCategories = async (req: Request, res: Response) => {
   try {
     const categories = await Category.find().lean();
@@ -29,7 +27,6 @@ const getCategories = async (req: Request, res: Response) => {
   }
 };
 
-// Get a specific Category
 const getCategory = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
   try {
@@ -47,7 +44,6 @@ const getCategory = async (req: Request, res: Response) => {
   }
 };
 
-// Update a Category
 const updateCategory = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
   try {
@@ -66,7 +62,6 @@ const updateCategory = async (req: Request, res: Response) => {
   }
 };
 
-// Delete a Category
 const deleteCategory = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
   try {

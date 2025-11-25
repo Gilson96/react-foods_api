@@ -8,8 +8,6 @@ interface MulterRequest extends Request {
     | Express.Multer.File[]
     | { [fieldname: string]: Express.Multer.File[] };
 }
-
-// Create a Food
 const createFood = async (req: MulterRequest, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
@@ -44,7 +42,6 @@ const createFood = async (req: MulterRequest, res: Response) => {
   }
 };
 
-// Get all Food data
 const getFoods = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
@@ -60,7 +57,6 @@ const getFoods = async (req: Request, res: Response) => {
   }
 };
 
-// Get a specific Food
 const getFood = async (req: Request, res: Response) => {
   const foodId = req.params.foodId;
   const restaurantId = req.params.restaurantId;
@@ -80,7 +76,6 @@ const getFood = async (req: Request, res: Response) => {
   }
 };
 
-// Update a Food
 const updateFood = async (req: Request, res: Response) => {
   const foodId = req.params.foodId;
   try {
@@ -97,7 +92,6 @@ const updateFood = async (req: Request, res: Response) => {
   }
 };
 
-// Delete a Food
 const deleteFood = async (req: Request, res: Response) => {
   const foodId = req.params.foodId;
   const restaurantId = req.params.restaurantId;
