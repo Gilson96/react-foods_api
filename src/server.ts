@@ -19,7 +19,7 @@ const app: Application = express();
 
 // Define allowed origins based on environment
 const allowedOrigins =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === "development"
     ? "https://mernfoods.netlify.app"
     : "http://localhost:5173";
 
