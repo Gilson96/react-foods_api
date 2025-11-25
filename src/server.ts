@@ -23,7 +23,7 @@ const allowedOrigins =
     ? "https://mernfoods.netlify.app"
     : "http://localhost:5173";
 
-app.use(cors({ origin: allowedOrigins }));
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 // Parse cookies from incoming requests
