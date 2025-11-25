@@ -17,12 +17,6 @@ connectDB();
 
 const app: Application = express();
 
-// Define allowed origins based on environment
-const allowedOrigins =
-  process.env.NODE_ENV === "production"
-    ? "https://mernfoods.netlify.app"
-    : "http://localhost:5173";
-
 app.use(cors());
 app.use(express.json());
 
