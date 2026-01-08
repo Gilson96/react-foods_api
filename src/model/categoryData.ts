@@ -1,7 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 const { Schema } = mongoose;
 
-const categorySchema = new Schema({
+type CategoryTypes = {
+    _id: Types.ObjectId,
+    name: string,
+    price: string,
+    description: string,
+    poster_image: string,
+    quantity: number,
+    restaurants: [{ _id: Types.ObjectId }],
+}
+
+const categorySchema = new Schema<CategoryTypes>({
     name: {
         type: String,
         required: true
@@ -9,9 +19,9 @@ const categorySchema = new Schema({
     poster_image: {
         type: String,
     },
-    restaurants: [{ 
-        type: mongoose.Types.ObjectId, 
-        required: true, 
+    restaurants: [{
+        type: mongoose.Types.ObjectId,
+        required: true,
         ref: 'Restaurant'
     }],
 })

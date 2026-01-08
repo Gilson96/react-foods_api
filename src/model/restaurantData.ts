@@ -1,7 +1,23 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 const { Schema } = mongoose;
 
-const restaurantSchema = new Schema({
+type RestaurantTypes = {
+  _id: Types.ObjectId,
+  name: string,
+  address: string,
+  poster_image: string,
+  logo_image: string,
+  rating: string,
+  deliveryFee: string,
+  arrival: number,
+  admin: string,
+  date: string,
+  foods: [{ _id: Types.ObjectId }],
+  ratings_and_reviews: [{ _id: Types.ObjectId }],
+  category: { _id: Types.ObjectId }
+}
+
+const restaurantSchema = new Schema<RestaurantTypes>({
   name: {
     type: String,
   },

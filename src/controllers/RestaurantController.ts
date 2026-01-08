@@ -2,27 +2,12 @@ import Restaurant from "../model/restaurantData";
 import Category from "../model/categoryData";
 import { Request, Response } from "express";
 
-interface MulterRequest extends Request {
-  files?: {
-    [fieldname: string]: Express.Multer.File[];
-  };
-}
-
-export const createRestaurant = async (req: MulterRequest, res: Response) => {
+export const createRestaurant = async (req: Request, res: Response) => {
   const categoryId = req.params.categoryId;
 
   try {
-    const posterImage = req.files?.poster_image?.[0]?.path || "";
-    const logoImage = req.files?.logo_image?.[0]?.path || "";
 
-    const restaurantPayload = {
-      ...req.body,
-      poster_image: posterImage, 
-      logo_image: logoImage,
-      category: categoryId,
-    };
-
-    const createdRestaurant = await Restaurant.create(restaurantPayload);
+    const createdRestaurant = await Restaurant.create(req.body);
 
     const updatedCategory = await Category.findByIdAndUpdate(
       categoryId,
@@ -32,9 +17,9 @@ export const createRestaurant = async (req: MulterRequest, res: Response) => {
 
     res.status(200).json(updatedCategory);
   } catch (error) {
-    res.status(500).json({
-      message: error instanceof Error ? error.message : "Unknown server error",
-    });
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 };
 
@@ -44,9 +29,7 @@ const getRestaurants = async (req: Request, res: Response) => {
     res.status(200).json(Restaurants);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -58,9 +41,7 @@ const getRestaurant = async (req: Request, res: Response) => {
     res.status(200).json(restaurant);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -76,9 +57,7 @@ const updateRestaurant = async (req: Request, res: Response) => {
     res.status(200).json(updatedRestaurant);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -93,16 +72,14 @@ const deleteRestaurant = async (req: Request, res: Response) => {
 
     await Category.findOneAndUpdate(
       { _id: categoryId },
-      { $pull: { restaurants: "67a88809ffebbc48d0fd3235" } },
+      { $pull: { restaurants: restaurantToDelete } },
       { new: true }
     );
 
     res.status(200).json("deleted");
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };

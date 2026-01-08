@@ -1,7 +1,16 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 const { Schema } = mongoose;
 
-const ratingsAndreviewsSchema = new Schema({
+type RatingsAndReviewsTypes = {
+  _id: Types.ObjectId,
+  name: string,
+  rating: string,
+  description: string,
+  date: string,
+  restaurant: { _id: Types.ObjectId },
+}
+
+const ratingsAndReviewsSchema = new Schema<RatingsAndReviewsTypes>({
   name: {
     type: String,
   },
@@ -22,6 +31,6 @@ const ratingsAndreviewsSchema = new Schema({
 
 const ratingsAndreviews = mongoose.model(
   "Rating&Review",
-  ratingsAndreviewsSchema
+  ratingsAndReviewsSchema
 );
 export default ratingsAndreviews;

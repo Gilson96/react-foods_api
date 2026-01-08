@@ -7,9 +7,7 @@ const createCategory = async (req: Request, res: Response) => {
     res.status(200).json(createCategory);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -20,9 +18,7 @@ const getCategories = async (req: Request, res: Response) => {
     res.status(200).json(categories);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -37,9 +33,7 @@ const getCategory = async (req: Request, res: Response) => {
     res.status(200).json(category);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -55,9 +49,7 @@ const updateCategory = async (req: Request, res: Response) => {
     res.status(200).json(updatedCategory);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -69,9 +61,7 @@ const deleteCategory = async (req: Request, res: Response) => {
     res.status(200).json("deleted");
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };

@@ -1,5 +1,5 @@
 import User from "../model/userData";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -7,12 +7,11 @@ const getUsers = async (req: Request, res: Response) => {
     res.status(200).json(user);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
+
 const editUser = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   try {
@@ -24,9 +23,7 @@ const editUser = async (req: Request, res: Response) => {
     res.status(200).json(updatedRestaurant);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -40,9 +37,7 @@ const UserDelete = async (req: Request, res: Response) => {
     res.status(200).json(updatedOrders);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -58,9 +53,7 @@ const AddFavouriteRestaurants = async (req: Request, res: Response) => {
     res.status(200).json(updatedFavourite);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -77,9 +70,7 @@ const RemoveFavouriteRestaurants = async (req: Request, res: Response) => {
     res.status(200).json(removeRestaurant);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -95,9 +86,7 @@ const AddOrders = async (req: Request, res: Response) => {
     res.status(200).json(updatedOrders);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -114,9 +103,7 @@ const RemoveOrdersRestaurants = async (req: Request, res: Response) => {
     res.status(200).json(removeRestaurant);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };

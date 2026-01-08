@@ -2,10 +2,7 @@ import RatingAndReview from "../model/ratingsReviewsData";
 import Restaurant from "../model/restaurantData";
 import { Request, Response } from "express";
 
-const createRatingAndReview = async (
-  req: Request<{ restaurantId: string }>,
-  res: Response
-) => {
+const createRatingAndReview = async (req: Request, res: Response) => {
   const restaurantId = req.params.restaurantId;
   try {
     const createRatingAndReview = await RatingAndReview.create(req.body);
@@ -18,9 +15,7 @@ const createRatingAndReview = async (
     res.status(200).json(AddReviewToRestaurant);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -35,9 +30,7 @@ const getRatingAndReviews = async (req: Request, res: Response) => {
     res.status(200).json(ratingAndReviews);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -53,9 +46,7 @@ const getRatingAndReview = async (req: Request, res: Response) => {
     res.status(200).json(ratingAndReview);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -71,9 +62,7 @@ const updateRatingAndReview = async (req: Request, res: Response) => {
     res.status(200).json(updatedRatingAndReview);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
@@ -91,9 +80,7 @@ const deleteRatingAndReview = async (req: Request, res: Response) => {
     res.status(200).json("deleted");
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({ message: error.message });
-    } else {
-      res.status(404).json({ message: "Unknown error occurred" });
+      res.status(400).json({ message: error.message });
     }
   }
 };
