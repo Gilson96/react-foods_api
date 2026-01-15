@@ -1,99 +1,66 @@
-#  MERN Foods – Backend API (Node.js + Express + MongoDB)
+# Mern Foods - backend API
 
-An **Node.js + Express backend** API with RESTful routes, authentication for the Mern-Foods full-stack application.
+An API with RESTful routes, authentication for the Mern-foods full-stack application.
 
 ---
 
-## 🔧 Built With
+## Built With
 
 - Node.js
 - Express.js
-- Typescript
+- TypeScript
 - MongoDB
 - Mongoose ODM
 - Hosted on Heroku
   
 ---
 
-## 🚀 Features
+##  Features
 
-- Full CRUD for Restaurants, Foods, Reviews, and Categories
-- Role-based access control (Admin vs User)
-- API endpoints aligned to REST best practices
+- RESTful API architecture
+- Full CRUD operations for restaurants, foods, reviews, and categories
+- Role-based access control (User / Admin)
+- Stripe payment handling
+- Error handling for API endpoints
   
 ---
 
-## 📁 Sample Environment File (`.env.example`)
+## Environment File
 
 ```env
 MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<db>?retryWrites=true&w=majority
-
+STRIPE_SECRET_KEY=your_stripe_secret_key
 ```
 --- 
 
-## 🗂 API Endpoints
+## API Endpoints
 
-Public Access
-
-| Method | Endpoint                      | Description                   |
-| ------ | ----------------------------- | ----------------------------- |
-| GET    | /categories                   | Fetch all categories          |
-| GET    | /restaurants                  | List all restaurants          |
-| GET    | /foods                        | List all foods                |
-| GET    | /:restaurantId/food/:foodId | Get single food details       |
-| GET    | /:restaurantId/reviews       | List reviews for a restaurant |
-| POST   | /payment-intent               | Create Stripe payment intent  |
-| POST   | /signup, /login, /logout      | Authentication routes         |
-
-### Authenticated Users
-
-- GET /user, PUT /user/:userId, favorite & order routes
-
-### Admin Only
-
-- POST /category, CRUD routes for restaurants & foods, delete reviews
+### Public
+- GET /categories
+- GET /restaurants
+- GET /foods
+- POST /payment-intent 
 
 ---
 
-## 📁 Project Structure
-
-react-foods_api/
-
-├── controllers/ # Route logic (auth, products, orders)
-
-├── middleware/ # Auth, error handlers
-
-├── models/ # Mongoose schemas
-
-├── routes/ # Route definitions
-
-├── .env.example # Sample env file
-
-├── server.js # Entry point
-
-
----
-
-## 🧭 How to Run Locally
+## How to Run Locally
 
 ```bash
-
 git clone https://github.com/Gilson96/react-foods_api.git
 cd react-foods_api
 npm install
-cp .env.example .env
-# Fill in your credentials
-npm run dev
-# Visit http://localhost:5000 to confirm API is running.
 
+# Create environment files and fill in your credentials
+touch .env.development
+touch .env.test
+
+# Start the development server
+npm run dev
 ```
 
 --- 
 
-🤝 Contact
+Contact
 
-👤 GitHub: @Gilson96
-
-💼 LinkedIn: www.linkedin.com/in/gilson-de-almeida
-
-📧 Email: grafael99@gmail.com
+LinkedIn: [www.linkedin.com/in/gilson-de-almeida](https://www.linkedin.com/in/gilson-de-almeida)
+Email: grafael99@gmail.com
